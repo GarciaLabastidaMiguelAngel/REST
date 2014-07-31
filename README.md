@@ -17,3 +17,8 @@
 ###/api/indicadores###
 ###/api/indicadores/{id}###
 ##POST##
+###pendiente###
+##PUT##
+###pendiente###
+##DELETE##
+###pendiente###
