@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+*Esta clase funciona como controlador de las peticiones Rest para las entidades 
  */
 
 package controller;
@@ -34,6 +32,12 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author miguel
  */
+/*
+*con estas notaciones indicamos que la clase funcionara con controlador tipo 
+*rest y que mapeara las solicitudes /api/entidades
+*cada metodo esta documentado con el tipo de dato que que retorna especificado
+con @return y los parametros que recibe con @param
+*/
 @RestController
 @RequestMapping("api/entidades")
 public class EntidadRestController {    
@@ -43,12 +47,8 @@ public class EntidadRestController {
      * @param request
      * @param response
      * @return JSON
-     */
-    
-    
-    
-   
-    
+     * Este metodo se encarga de generar la lista de entidades 
+     */    
     
     @RequestMapping(method=RequestMethod.GET,
                     produces="application/json")    
@@ -88,6 +88,7 @@ public class EntidadRestController {
      * @param request
      * @param response
      * @return XML
+     * Este metodo se encarga de generar la lista de entidades
      */
     @RequestMapping(method=RequestMethod.GET,
                     produces="application/xml")     
@@ -131,6 +132,7 @@ public class EntidadRestController {
      * @param request
      * @param response
      * @return JSON
+     * este metodo gestiona las solicitudes de una entidad con un ID esfecificado
      */
     @RequestMapping(value="/{id}",
                      method=RequestMethod.GET,
@@ -172,6 +174,7 @@ public class EntidadRestController {
      * @param request
      * @param response
      * @return XML
+     * este metodo gestiona la solicitud de una entidad con ID especifico
      */
     @RequestMapping(value="/{id}",
                      method=RequestMethod.GET,
@@ -219,6 +222,8 @@ public class EntidadRestController {
      * @param request
      * @param response
      * @return JSON
+     * este metodo se encarga de generar la lista de municipios que pertecen 
+     * a una entidad con ID especifico 
      */
     
     
@@ -267,6 +272,8 @@ public class EntidadRestController {
      * @param request
      * @param response
      * @return XML
+     * este metodo se encarga de generar la lista de municipios que pertecen 
+     * a una entidad con ID especifico 
      */
     @RequestMapping(value="/{id}/municipios",
                     method=RequestMethod.GET,

@@ -33,13 +33,7 @@ public class IndicadoresRestController {
      * @param request
      * @param response
      * @return JSON
-     */
-    
-    
-    
-   
-    
-    
+     */    
     @RequestMapping(method=RequestMethod.GET,
                     produces="application/json")    
             public String getJSON(HttpServletRequest request,
@@ -69,10 +63,7 @@ public class IndicadoresRestController {
             JSON=new Gson();
             response.setStatus(HttpServletResponse.SC_OK);
             return JSON.toJson(datos);
-            }
-            
- 
-            
+            }            
     /**
      *
      * @param request
@@ -118,7 +109,7 @@ public class IndicadoresRestController {
             
             
             
-                /**
+     /**
      *
      * @param id
      * @param request
