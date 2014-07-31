@@ -101,7 +101,7 @@ public class Municipios implements Serializable {
 
     @Override
     public String toString() {
-        return "model.persistencia.newpackage.Municipios[ idMunicipio=" + idMunicipio + " ]";
+        return "model.persistencia.Municipios[ idMunicipio=" + idMunicipio + " ]";
     }
     
 }

@@ -17,9 +17,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.EntidadesDAO;
-import model.util.Error;
-import model.util.Datos;
 import model.persistencia.Entidades;
+import model.persistencia.Municipios;
+import model.util.Datos;
+import model.util.Error;
 import org.hibernate.HibernateException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -206,6 +207,105 @@ public class EntidadRestController {
             response.setStatus(HttpServletResponse.SC_OK);
             return XML.toXML(elemento);          
             }
+            
+            
+            
+            
+            
+            
+             /**
+     *
+     * @param id
+     * @param request
+     * @param response
+     * @return JSON
+     */
+    
+    
+    
+   
+    
+    
+    @RequestMapping(value="/{id}/municipios",
+                    method=RequestMethod.GET,
+                    produces="application/json")    
+            public String getMunicipiosJSON(@PathVariable("id") int id,
+                                            HttpServletRequest request,
+                                          HttpServletResponse response) {            
+            EntidadesDAO tabla=new EntidadesDAO();
+            Gson JSON;
+            List<Municipios> lista;
+            try {
+                lista=tabla.selectAllMunicipios(id);
+                if(lista.isEmpty()){
+                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    Error e=new Error();
+                    e.setTypeAndDescription("Warning","No existen elementos");
+                    JSON=new Gson();
+                     return JSON.toJson(e);
+                }
+            } catch (HibernateException ex) {
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    Error e=new Error();
+                    e.setTypeAndDescription("DataBase",ex.getMessage());
+                    JSON=new Gson();
+                     return JSON.toJson(e);
+            }
+        
+            Datos<Municipios> datos = new Datos<>();
+            datos.setDatos(lista);
+            JSON=new Gson();
+            response.setStatus(HttpServletResponse.SC_OK);
+            return JSON.toJson(datos);
+            }
+            
+ 
+            
+    /**
+     *
+     * @param id
+     * @param request
+     * @param response
+     * @return XML
+     */
+    @RequestMapping(value="/{id}/municipios",
+                    method=RequestMethod.GET,
+                    produces="application/xml")     
+            public String getMunicipiosXML(@PathVariable("id") int id,
+                                            HttpServletRequest request,
+                                            HttpServletResponse response) { 
+             EntidadesDAO tabla=new EntidadesDAO();
+            XStream XML;
+            List<Municipios> lista;
+            
+            try {
+                lista=tabla.selectAllMunicipios(id);     
+                
+               if(lista.isEmpty()){
+                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    Error e=new Error();
+                    e.setTypeAndDescription("Warning","No existen elementos");
+                    XML= new XStream();
+                    XML.alias("dataInfo", Error.class);
+                    return XML.toXML(e);
+                }
+            } catch (HibernateException ex) {
+                    response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    Error e=new Error();
+                    e.setTypeAndDescription("dataBaseError",ex.getMessage());
+                    XML= new XStream();
+                    XML.alias("dataInfo", Error.class);
+                    return XML.toXML(e);
+            }
+        
+            Datos<Municipios> datos=new Datos<>();
+            datos.setDatos(lista);
+            XML= new XStream();
+            XML.alias("municipio",Municipios.class);       
+            response.setStatus(HttpServletResponse.SC_OK);
+            return XML.toXML(lista);
+            }
+            
             
     @RequestMapping(method=RequestMethod.POST,
                     produces="application/json")

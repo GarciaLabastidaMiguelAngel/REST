@@ -8,6 +8,7 @@ package model;
 
 import java.util.List;
 import model.persistencia.Entidades;
+import model.persistencia.Municipios;
 import model.util.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -161,6 +162,28 @@ private void iniciaOperacion() throws HibernateException
     if(error!=null)
         throw error;
     return listaEntidad; 
+}
+    
+    public List<Municipios> selectAllMunicipios(int id) throws HibernateException
+{ 
+    List<Municipios> listaMunicipios = null;  
+    HibernateException error=null;
+    try 
+    { 
+        iniciaOperacion(); 
+        listaMunicipios = sesion.createQuery("from Municipios where idEntidad="+id).list();
+    } 
+    
+        catch(HibernateException e){
+                error=e;
+                 tx.rollback();
+     }
+   finally { 
+        sesion.close(); 
+    }  
+    if(error!=null)
+        throw error;
+    return listaMunicipios; 
 }
 
 }

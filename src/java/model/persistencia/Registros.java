@@ -108,7 +108,10 @@ public class Registros implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idRegistros != null ? idRegistros.hashCode() : 0);
+        hash += (anio != null ? anio.hashCode() : 0);
+        hash += (idIndicador != null ? idIndicador.hashCode() : 0);
+        hash += (idMunicipio != null ? idMunicipio.hashCode() : 0);
+        hash += (idTemasNivel3 != null ? idTemasNivel3.hashCode() : 0);
         return hash;
     }
 
@@ -127,7 +130,7 @@ public class Registros implements Serializable {
 
     @Override
     public String toString() {
-        return "model.persistencia.newpackage.Registros[ idRegistros=" + idRegistros + " ]";
+        return "model.persistencia.Registros[ idRegistros=" + idRegistros + " ]";
     }
     
 }

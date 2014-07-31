@@ -89,7 +89,7 @@ public class Entidades implements Serializable {
 
     @Override
     public String toString() {
-        return "model.persistencia.newpackage.Entidades[ idEntidad=" + idEntidad + " ]";
+        return "model.persistencia.Entidades[ idEntidad=" + idEntidad + " ]";
     }
     
 }

@@ -96,7 +96,7 @@ import javax.persistence.Id;
 
     @Override
     public String toString() {
-        return "model.persistencia.newpackage.Indicadores[ idIndicador=" + idIndicador + " ]";
+        return "model.persistencia.Indicadores[ idIndicador=" + idIndicador + " ]";
     }
     
 }

@@ -11,8 +11,10 @@ import com.thoughtworks.xstream.XStream;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.TemasNivel1DAO;
 import model.TemasNivel2DAO;
 import model.persistencia.TemasNivel2;
+import model.persistencia.TemasNivel3;
 import model.util.Datos;
 import org.hibernate.HibernateException;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author miguel
  */
 @RestController
-@RequestMapping("api/temas2")
+@RequestMapping("api/temasnivel2")
 public class TemasNivel2RestController {
        
    
@@ -189,5 +191,106 @@ public class TemasNivel2RestController {
             response.setStatus(HttpServletResponse.SC_OK);
             return XML.toXML(elemento);          
             }
+            
+            
+            
+            
+                    
+            
+                     
+             /**
+     *
+     * @param id
+     * @param request
+     * @param response
+     * @return JSON
+     */
+    
+    
+    
+   
+    
+    
+    @RequestMapping(value="/{id}/temasnivel3",
+                    method=RequestMethod.GET,
+                    produces="application/json")    
+            public String getMunicipiosJSON(@PathVariable("id") int id,
+                                            HttpServletRequest request,
+                                          HttpServletResponse response) {            
+            TemasNivel2DAO tabla=new TemasNivel2DAO();
+            Gson JSON;
+            List<TemasNivel3> lista;
+            try {
+                lista=tabla.selectAllTemasNivel3(id);
+                if(lista.isEmpty()){
+                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    model.util.Error e=new model.util.Error();
+                    e.setTypeAndDescription("Warning","No existen elementos");
+                    JSON=new Gson();
+                     return JSON.toJson(e);
+                }
+            } catch (HibernateException ex) {
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    model.util.Error e=new model.util.Error();
+                    e.setTypeAndDescription("DataBase",ex.getMessage());
+                    JSON=new Gson();
+                     return JSON.toJson(e);
+            }
+        
+            Datos<TemasNivel3> datos = new Datos<>();
+            datos.setDatos(lista);
+            JSON=new Gson();
+            response.setStatus(HttpServletResponse.SC_OK);
+            return JSON.toJson(datos);
+            }
+            
+ 
+            
+    /**
+     *
+     * @param id
+     * @param request
+     * @param response
+     * @return XML
+     */
+    @RequestMapping(value="/{id}/temasnivel3",
+                    method=RequestMethod.GET,
+                    produces="application/xml")     
+            public String getMunicipiosXML(@PathVariable("id") int id,
+                                            HttpServletRequest request,
+                                            HttpServletResponse response) { 
+             TemasNivel2DAO tabla=new TemasNivel2DAO();
+            XStream XML;
+            List<TemasNivel3> lista;
+            
+            try {
+                lista=tabla.selectAllTemasNivel3(id);     
+                
+               if(lista.isEmpty()){
+                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    model.util.Error e=new model.util.Error();
+                    e.setTypeAndDescription("Warning","No existen elementos");
+                    XML= new XStream();
+                    XML.alias("dataInfo", model.util.Error.class);
+                    return XML.toXML(e);
+                }
+            } catch (HibernateException ex) {
+                    response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    model.util.Error e=new model.util.Error();
+                    e.setTypeAndDescription("dataBaseError",ex.getMessage());
+                    XML= new XStream();
+                    XML.alias("dataInfo", model.util.Error.class);
+                    return XML.toXML(e);
+            }
+        
+            Datos<TemasNivel3> datos=new Datos<>();
+            datos.setDatos(lista);
+            XML= new XStream();
+            XML.alias("Tema-Nivel-3",TemasNivel3.class);       
+            response.setStatus(HttpServletResponse.SC_OK);
+            return XML.toXML(lista);
+            }
+            
+            
             
 }

@@ -92,7 +92,7 @@ public class TemasNivel3 implements Serializable {
 
     @Override
     public String toString() {
-        return "model.persistencia.newpackage.TemasNivel3[ idTemasNivel3=" + idTemasNivel3 + " ]";
+        return "model.persistencia.TemasNivel3[ idTemasNivel3=" + idTemasNivel3 + " ]";
     }
     
 }

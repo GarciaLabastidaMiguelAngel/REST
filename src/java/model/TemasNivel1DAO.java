@@ -8,6 +8,7 @@ package model;
 
 import java.util.List;
 import model.persistencia.TemasNivel1;
+import model.persistencia.TemasNivel2;
 import model.util.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -162,5 +163,28 @@ private void iniciaOperacion() throws HibernateException
         throw error;
     return listatemasNivel1; 
 }
+    
+      public List<TemasNivel2> selectAllTemasNivel2(int id) throws HibernateException
+{ 
+    List<TemasNivel2> listaTemasNivel2 = null;  
+    HibernateException error=null;
+    try 
+    { 
+        iniciaOperacion(); 
+        listaTemasNivel2 = sesion.createQuery("from TemasNivel2 where idTemasNivel1="+id).list();
+    } 
+    
+        catch(HibernateException e){
+                error=e;
+                 tx.rollback();
+     }
+   finally { 
+        sesion.close(); 
+    }  
+    if(error!=null)
+        throw error;
+    return listaTemasNivel2; 
+}
+
 
 }
