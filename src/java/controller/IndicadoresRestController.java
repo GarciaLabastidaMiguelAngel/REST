@@ -86,7 +86,7 @@ public class IndicadoresRestController {
                    Error e=new Error();
                     e.setTypeAndDescription("Warning","No existen elementos");
                     XML= new XStream();
-                    XML.alias("dataInfo", model.util.Error.class);
+                    XML.alias("dataInfo", Error.class);
                     return XML.toXML(e);
                 }
             } catch (HibernateException ex) {
@@ -94,14 +94,14 @@ public class IndicadoresRestController {
                     Error e=new Error();
                     e.setTypeAndDescription("dataBaseError",ex.getMessage());
                     XML= new XStream();
-                    XML.alias("dataInfo", model.util.Error.class);
+                    XML.alias("dataInfo", Error.class);
                     return XML.toXML(e);
             }
         
             Datos<Indicadores> datos=new Datos<>();
             datos.setDatos(lista);
             XML= new XStream();
-            XML.alias("municipio",Indicadores.class);       
+            XML.alias("indicador",Indicadores.class);       
             response.setStatus(HttpServletResponse.SC_OK);
             return XML.toXML(lista);
             }

@@ -7,15 +7,21 @@
 package controller;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.EntidadesDAO;
 import model.MunicipiosDAO;
+import model.persistencia.Entidades;
 import model.persistencia.Municipios;
 import model.util.Datos;
+import model.util.Error;
 import org.hibernate.HibernateException;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,14 +57,14 @@ public class MunicipiosRestController {
                 lista=tabla.selectAll();
                 if(lista.isEmpty()){
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    model.util.Error e=new model.util.Error();
+                    Error e=new Error();
                     e.setTypeAndDescription("Warning","No existen elementos");
                     JSON=new Gson();
                      return JSON.toJson(e);
                 }
             } catch (HibernateException ex) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                    model.util.Error e=new model.util.Error();
+                    Error e=new Error();
                     e.setTypeAndDescription("DataBase",ex.getMessage());
                     JSON=new Gson();
                      return JSON.toJson(e);
@@ -92,18 +98,18 @@ public class MunicipiosRestController {
                 
                if(lista.isEmpty()){
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    model.util.Error e=new model.util.Error();
+                    Error e=new Error();
                     e.setTypeAndDescription("Warning","No existen elementos");
                     XML= new XStream();
-                    XML.alias("dataInfo", model.util.Error.class);
+                    XML.alias("dataInfo",Error.class);
                     return XML.toXML(e);
                 }
             } catch (HibernateException ex) {
                     response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                    model.util.Error e=new model.util.Error();
+                    Error e=new Error();
                     e.setTypeAndDescription("dataBaseError",ex.getMessage());
                     XML= new XStream();
-                    XML.alias("dataInfo", model.util.Error.class);
+                    XML.alias("dataInfo",Error.class);
                     return XML.toXML(e);
             }
         
@@ -138,14 +144,14 @@ public class MunicipiosRestController {
                 elemento=tabla.selectById(id);
                 if(elemento==null){
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    model.util.Error e=new model.util.Error();
+                    Error e=new Error();
                     e.setTypeAndDescription("Warning","No existe el elemeto solicitado con id:"+id);
                     JSON=new Gson();
                     return JSON.toJson(e);
                 }
             } catch (HibernateException ex) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                    model.util.Error e=new model.util.Error();
+                    Error e=new Error();
                     e.setTypeAndDescription("DataBaseError",ex.getMessage());
                     JSON=new Gson();
                      return JSON.toJson(e);
@@ -179,18 +185,18 @@ public class MunicipiosRestController {
                 elemento=tabla.selectById(id);
                 if(elemento==null){
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    model.util.Error e=new model.util.Error();
+                    Error e=new Error();
                     e.setTypeAndDescription("Warning","No existe el elemeto solicitado con id:"+id);
                     XML= new XStream();
-                    XML.alias("dataInfo", model.util.Error.class);
+                    XML.alias("dataInfo", Error.class);
                     return XML.toXML(e);
                 }
             } catch (HibernateException ex) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                    model.util.Error e=new model.util.Error();
+                    Error e=new Error();
                     e.setTypeAndDescription("DataBaseError",ex.getMessage());
                     XML= new XStream();
-                    XML.alias("dataInfo", model.util.Error.class);
+                    XML.alias("dataInfo",Error.class);
                     return XML.toXML(e);
             }
         
@@ -199,4 +205,108 @@ public class MunicipiosRestController {
             response.setStatus(HttpServletResponse.SC_OK);
             return XML.toXML(elemento);          
             }
+            
+    //************************POST***********************************************         
+    /**
+     *
+     * @param body
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(method=RequestMethod.POST,
+                    produces="application/json",consumes="application/json")
+            public String setJSON(@RequestBody String body,
+                                     HttpServletRequest request,
+                                     HttpServletResponse response) {
+              Municipios m;
+              Gson JSON=new Gson();
+              try{
+                m=JSON.fromJson(body, Municipios.class);
+              }
+              catch(JsonSyntaxException ex){
+                  response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                   Error er=new Error();
+                    er.setTypeAndDescription("JsonSyntax",ex.getMessage().split("java.io.EOFException:")[1]);
+                    JSON=new Gson();
+                     return JSON.toJson(er);
+              }
+              if(m.getDescMuniciopio()==null || m.getIdEntidad()==null){
+                  response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                  Error er=new Error();
+                    er.setTypeAndDescription("inconsistency","Los parametros no son los correctos verificar");
+                    JSON=new Gson();
+                     return JSON.toJson(er);
+              }
+              try {
+                MunicipiosDAO tabla=new MunicipiosDAO();
+                tabla.insert(m);
+            } catch (HibernateException ex) {
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    Error er=new Error();
+                    er.setTypeAndDescription("DataBaseError",ex.getMessage());
+                    JSON=new Gson();
+                    return JSON.toJson(er);
+            }
+             response.setStatus(HttpServletResponse.SC_OK);
+              Error er=new Error();
+                    er.setTypeAndDescription("successful","exito en la operacion");
+                    JSON=new Gson();
+              return JSON.toJson(er);
+            
+        }         
+            
+    /**
+     *
+     * @param body
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(method=RequestMethod.POST,
+                    produces="application/xml",consumes="application/xml")
+            public String setXML(@RequestBody String body,
+                                     HttpServletRequest request,
+                                     HttpServletResponse response) {
+              Municipios m;
+              XStream XML;
+              XML = new XStream(new DomDriver());
+              try{
+                 XML.setClassLoader(Municipios.class.getClassLoader());
+                 XML.alias("municipio",Municipios.class);
+                m=(Municipios)XML.fromXML(body);
+              }
+              catch(Exception ex){
+                  response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                   Error er=new Error();
+                    er.setTypeAndDescription("XMLSyntax",ex.getMessage());
+                    XML.alias("dataInfo", Error.class);
+                    return XML.toXML(er);
+              }
+              if(m.getDescMuniciopio()==null || m.getIdEntidad()==null){
+                  response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                  Error er=new Error();
+                    er.setTypeAndDescription("inconsistency","Los parametros no son los correctos verificar");
+                   XML.alias("dataInfo", Error.class);
+                    return XML.toXML(er);
+              }
+              try {
+                MunicipiosDAO tabla=new MunicipiosDAO();
+                tabla.insert(m);
+            } catch (HibernateException ex) {
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    Error er=new Error();
+                    er.setTypeAndDescription("DataBaseError",ex.getMessage());
+                    XML.alias("dataInfo", Error.class);
+                    return XML.toXML(er);
+            }
+             response.setStatus(HttpServletResponse.SC_OK);
+              Error er=new Error();
+                    er.setTypeAndDescription("successful","exito en la operacion");
+                   XML.alias("dataInfo", Error.class);
+                    return XML.toXML(er);
+            
+        }         
+            
+            
 }

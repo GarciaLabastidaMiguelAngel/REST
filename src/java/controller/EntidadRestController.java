@@ -7,10 +7,9 @@ package controller;
 
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -118,7 +117,7 @@ public class EntidadRestController {
                     return XML.toXML(e);
             }
         
-            Datos<Entidades> datos=new Datos<Entidades>();
+            Datos<Entidades> datos=new Datos<>();
             datos.setDatos(lista);
             XML= new XStream();
             XML.alias("entidad",Entidades.class);       
@@ -224,12 +223,7 @@ public class EntidadRestController {
      * @return JSON
      * este metodo se encarga de generar la lista de municipios que pertecen 
      * a una entidad con ID especifico 
-     */
-    
-    
-    
-   
-    
+     */    
     
     @RequestMapping(value="/{id}/municipios",
                     method=RequestMethod.GET,
@@ -312,32 +306,106 @@ public class EntidadRestController {
             response.setStatus(HttpServletResponse.SC_OK);
             return XML.toXML(lista);
             }
-            
-            
+   //************************POST***********************************************         
+    /**
+     *
+     * @param body
+     * @param request
+     * @param response
+     * @return
+     */
     @RequestMapping(method=RequestMethod.POST,
-                    produces="application/json")
-            public String setClientes(@RequestBody String body,
+                    produces="application/json",consumes="application/json")
+            public String setJSON(@RequestBody String body,
                                      HttpServletRequest request,
                                      HttpServletResponse response) {
               Entidades e;
-        e = new Entidades("oaxaca");
-              EntidadesDAO bd=new EntidadesDAO();
-              int i;
-        i = bd.insert(e);
-                /*
-                JsonParser parser = new JsonParser();
-                JsonElement datos = parser.parse(body);
-                JsonObject JSON=datos.getAsJsonObject();
-              String resultado="";
-                String key;
-            Enumeration headerNames = request.getParameterNames();
-		while (headerNames.hasMoreElements()) {
-                        key=(String) headerNames.nextElement();
-			resultado += "key:"+key+"\n";
-			resultado += "value:"+ request.getParameter(key)+"\n\n";
-		}*/
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            return String.valueOf(i);
+              Gson JSON=new Gson();
+              try{
+                e=JSON.fromJson(body, Entidades.class);
+              }
+              catch(JsonSyntaxException ex){
+                  response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                   Error er=new Error();
+                    er.setTypeAndDescription("JsonSyntax",ex.getMessage().split("java.io.EOFException:")[1]);
+                    JSON=new Gson();
+                     return JSON.toJson(er);
+              }
+              if(e.getDescEntidad()==null){
+                  response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                  Error er=new Error();
+                    er.setTypeAndDescription("inconsistency","Los parametros no son los correctos verificar");
+                    JSON=new Gson();
+                     return JSON.toJson(er);
+              }
+              try {
+                EntidadesDAO tabla=new EntidadesDAO();
+                tabla.insert(e);
+            } catch (HibernateException ex) {
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    Error er=new Error();
+                    er.setTypeAndDescription("DataBaseError",ex.getMessage());
+                    JSON=new Gson();
+                    return JSON.toJson(er);
+            }
+             response.setStatus(HttpServletResponse.SC_OK);
+              Error er=new Error();
+                    er.setTypeAndDescription("successful","exito en la operacion");
+                    JSON=new Gson();
+              return JSON.toJson(er);
+            
+        }         
+            
+    /**
+     *
+     * @param body
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(method=RequestMethod.POST,
+                    produces="application/xml",consumes="application/xml")
+            public String setXML(@RequestBody String body,
+                                     HttpServletRequest request,
+                                     HttpServletResponse response) {
+              Entidades e;
+              XStream XML;
+              XML = new XStream(new DomDriver());
+              try{
+                 XML.setClassLoader(Entidades.class.getClassLoader());
+                 XML.alias("entidad",Entidades.class);
+                e=(Entidades)XML.fromXML(body);
+              }
+              catch(Exception ex){
+                  response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                   Error er=new Error();
+                    er.setTypeAndDescription("XMLSyntax",ex.getMessage());
+                    XML.alias("dataInfo", Error.class);
+                    return XML.toXML(er);
+              }
+              if(e.getDescEntidad()==null){
+                  response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                  Error er=new Error();
+                    er.setTypeAndDescription("inconsistency","Los parametros no son los correctos verificar");
+                   XML.alias("dataInfo", Error.class);
+                    return XML.toXML(er);
+              }
+              try {
+                EntidadesDAO tabla=new EntidadesDAO();
+                tabla.insert(e);
+            } catch (HibernateException ex) {
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    Error er=new Error();
+                    er.setTypeAndDescription("DataBaseError",ex.getMessage());
+                    XML.alias("dataInfo", Error.class);
+                    return XML.toXML(er);
+            }
+             response.setStatus(HttpServletResponse.SC_OK);
+              Error er=new Error();
+                    er.setTypeAndDescription("successful","exito en la operacion");
+                   XML.alias("dataInfo", Error.class);
+                    return XML.toXML(er);
+            
         }         
      
 }

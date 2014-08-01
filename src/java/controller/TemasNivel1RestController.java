@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author miguel
  */
 @RestController
-@RequestMapping("api/temasnivel1")
+@RequestMapping("api/temasNivel1")
 public class TemasNivel1RestController {
        
    
@@ -171,7 +171,7 @@ public class TemasNivel1RestController {
                 elemento=tabla.selectById(id);
                 if(elemento==null){
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    Error e=new model.util.Error();
+                    Error e=new Error();
                     e.setTypeAndDescription("Warning","No existe el elemeto solicitado con id:"+id);
                     XML= new XStream();
                     XML.alias("dataInfo", Error.class);
@@ -179,7 +179,7 @@ public class TemasNivel1RestController {
                 }
             } catch (HibernateException ex) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                    Error e=new model.util.Error();
+                    Error e=new Error();
                     e.setTypeAndDescription("DataBaseError",ex.getMessage());
                     XML= new XStream();
                     XML.alias("dataInfo", Error.class);

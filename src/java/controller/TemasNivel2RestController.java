@@ -11,11 +11,11 @@ import com.thoughtworks.xstream.XStream;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.TemasNivel1DAO;
 import model.TemasNivel2DAO;
 import model.persistencia.TemasNivel2;
 import model.persistencia.TemasNivel3;
 import model.util.Datos;
+import model.util.Error;
 import org.hibernate.HibernateException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author miguel
  */
 @RestController
-@RequestMapping("api/temasnivel2")
+@RequestMapping("api/temasNivel2")
 public class TemasNivel2RestController {
        
    
@@ -44,14 +44,14 @@ public class TemasNivel2RestController {
                 lista=tabla.selectAll();
                 if(lista.isEmpty()){
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    model.util.Error e=new model.util.Error();
+                    Error e=new Error();
                     e.setTypeAndDescription("Warning","No existen elementos");
                     JSON=new Gson();
                      return JSON.toJson(e);
                 }
             } catch (HibernateException ex) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                    model.util.Error e=new model.util.Error();
+                    Error e=new Error();
                     e.setTypeAndDescription("DataBase",ex.getMessage());
                     JSON=new Gson();
                      return JSON.toJson(e);
@@ -85,18 +85,18 @@ public class TemasNivel2RestController {
                 
                if(lista.isEmpty()){
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    model.util.Error e=new model.util.Error();
+                    Error e=new Error();
                     e.setTypeAndDescription("Warning","No existen elementos");
                     XML= new XStream();
-                    XML.alias("dataInfo", model.util.Error.class);
+                    XML.alias("dataInfo", Error.class);
                     return XML.toXML(e);
                 }
             } catch (HibernateException ex) {
                     response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                    model.util.Error e=new model.util.Error();
+                    Error e=new Error();
                     e.setTypeAndDescription("dataBaseError",ex.getMessage());
                     XML= new XStream();
-                    XML.alias("dataInfo", model.util.Error.class);
+                    XML.alias("dataInfo", Error.class);
                     return XML.toXML(e);
             }
         
@@ -130,14 +130,14 @@ public class TemasNivel2RestController {
                 elemento=tabla.selectById(id);
                 if(elemento==null){
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    model.util.Error e=new model.util.Error();
+                    Error e=new Error();
                     e.setTypeAndDescription("Warning","No existe el elemeto solicitado con id:"+id);
                     JSON=new Gson();
                     return JSON.toJson(e);
                 }
             } catch (HibernateException ex) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                    model.util.Error e=new model.util.Error();
+                    Error e=new Error();
                     e.setTypeAndDescription("DataBaseError",ex.getMessage());
                     JSON=new Gson();
                      return JSON.toJson(e);
@@ -171,18 +171,18 @@ public class TemasNivel2RestController {
                 elemento=tabla.selectById(id);
                 if(elemento==null){
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    model.util.Error e=new model.util.Error();
+                    Error e=new Error();
                     e.setTypeAndDescription("Warning","No existe el elemeto solicitado con id:"+id);
                     XML= new XStream();
-                    XML.alias("dataInfo", model.util.Error.class);
+                    XML.alias("dataInfo", Error.class);
                     return XML.toXML(e);
                 }
             } catch (HibernateException ex) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                    model.util.Error e=new model.util.Error();
+                    Error e=new Error();
                     e.setTypeAndDescription("DataBaseError",ex.getMessage());
                     XML= new XStream();
-                    XML.alias("dataInfo", model.util.Error.class);
+                    XML.alias("dataInfo", Error.class);
                     return XML.toXML(e);
             }
         
@@ -224,14 +224,14 @@ public class TemasNivel2RestController {
                 lista=tabla.selectAllTemasNivel3(id);
                 if(lista.isEmpty()){
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    model.util.Error e=new model.util.Error();
+                    Error e=new Error();
                     e.setTypeAndDescription("Warning","No existen elementos");
                     JSON=new Gson();
                      return JSON.toJson(e);
                 }
             } catch (HibernateException ex) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                    model.util.Error e=new model.util.Error();
+                    Error e=new Error();
                     e.setTypeAndDescription("DataBase",ex.getMessage());
                     JSON=new Gson();
                      return JSON.toJson(e);
@@ -268,18 +268,18 @@ public class TemasNivel2RestController {
                 
                if(lista.isEmpty()){
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    model.util.Error e=new model.util.Error();
+                    Error e=new Error();
                     e.setTypeAndDescription("Warning","No existen elementos");
                     XML= new XStream();
-                    XML.alias("dataInfo", model.util.Error.class);
+                    XML.alias("dataInfo", Error.class);
                     return XML.toXML(e);
                 }
             } catch (HibernateException ex) {
                     response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                    model.util.Error e=new model.util.Error();
+                    Error e=new Error();
                     e.setTypeAndDescription("dataBaseError",ex.getMessage());
                     XML= new XStream();
-                    XML.alias("dataInfo", model.util.Error.class);
+                    XML.alias("dataInfo", Error.class);
                     return XML.toXML(e);
             }
         

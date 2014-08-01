@@ -27,12 +27,20 @@ public class Registros implements Serializable {
     private Integer anio;
     @Column(name = "cantidad")
     private Integer cantidad;
+    @Column(name = "idhash")
+    private Integer idhash; 
+      @Column(name = "id_entidad")
+    private Integer idEntidad;
     @Column(name = "id_indicador")
     private String idIndicador;
     @Column(name = "id_municipio")
-    private Integer idMunicipio;
+    private Integer idMunicipio;   
     @Column(name = "id_temas_nivel_3")
     private Integer idTemasNivel3;
+    
+  
+
+   
 
     public Registros() {
     }
@@ -84,6 +92,13 @@ public class Registros implements Serializable {
     public String getIdIndicador() {
         return idIndicador;
     }
+    public Integer getIdhash() {
+        return idhash;
+    }
+
+    public void setIdhash(Integer idhash) {
+        this.idhash = idhash;
+    }
 
     public void setIdIndicador(String idIndicador) {
         this.idIndicador = idIndicador;
@@ -104,15 +119,25 @@ public class Registros implements Serializable {
     public void setIdTemasNivel3(Integer idTemasNivel3) {
         this.idTemasNivel3 = idTemasNivel3;
     }
+    
+     public Integer getIdEntidad() {
+        return idEntidad;
+    }
+
+    public void setIdEntidad(Integer idEntidad) {
+        this.idEntidad = idEntidad;
+    }
+ 
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (anio != null ? anio.hashCode() : 0);
-        hash += (idIndicador != null ? idIndicador.hashCode() : 0);
-        hash += (idMunicipio != null ? idMunicipio.hashCode() : 0);
-        hash += (idTemasNivel3 != null ? idTemasNivel3.hashCode() : 0);
-        return hash;
+        int has = 0;
+        has += (anio != null ? anio.hashCode() : 0);
+        has += (idIndicador != null ? idIndicador.hashCode() : 0);
+        has += (idMunicipio != null ? idMunicipio.hashCode() : 0);
+        has += (idTemasNivel3 != null ? idTemasNivel3.hashCode() : 0);
+        has += (idEntidad != null ? idEntidad.hashCode() : 0);
+        return has;
     }
 
     @Override
