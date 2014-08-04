@@ -177,7 +177,7 @@ public class IndicadoresMontoRestController {
                     Error e=new Error();
                     e.setTypeAndDescription("Warning","No existen registros de entidades");
                     XML= new XStream();
-                    XML.alias("dataInfo", Error.class);
+                    XML.alias("message", Error.class);
                     return XML.toXML(e);
                 }
             } catch (HibernateException ex) {
@@ -185,7 +185,7 @@ public class IndicadoresMontoRestController {
                     Error e=new Error();
                     e.setTypeAndDescription("DataBase",ex.getMessage());
                      XML= new XStream();
-                    XML.alias("dataInfo", Error.class);
+                    XML.alias("message", Error.class);
                     return XML.toXML(e);
             }
             /*
@@ -201,7 +201,7 @@ public class IndicadoresMontoRestController {
                     Error e=new Error();
                     e.setTypeAndDescription("Warning","No existe el indicador solicitado con id:"+id);
                      XML= new XStream();
-                    XML.alias("dataInfo", Error.class);
+                    XML.alias("message", Error.class);
                     return XML.toXML(e);
                 }
             } catch (HibernateException ex) {
@@ -209,7 +209,7 @@ public class IndicadoresMontoRestController {
                     Error e=new Error();
                     e.setTypeAndDescription("DataBaseError",ex.getMessage());
                     XML= new XStream();
-                    XML.alias("dataInfo", Error.class);
+                    XML.alias("message", Error.class);
                     return XML.toXML(e);
             }
             
@@ -224,7 +224,7 @@ public class IndicadoresMontoRestController {
                     Error e=new Error();
                     e.setTypeAndDescription("Warning","No existen registros del indicador con id:"+id);
                      XML= new XStream();
-                    XML.alias("dataInfo", Error.class);
+                    XML.alias("message", Error.class);
                     return XML.toXML(e);
                 }
             } catch (HibernateException ex) {
@@ -232,7 +232,7 @@ public class IndicadoresMontoRestController {
                     Error e=new Error();
                     e.setTypeAndDescription("DataBase",ex.getMessage());
                      XML= new XStream();
-                    XML.alias("dataInfo", Error.class);
+                    XML.alias("message", Error.class);
                     return XML.toXML(e);
             }
             listaFinal=new ArrayList<>();
@@ -286,7 +286,7 @@ public class IndicadoresMontoRestController {
                     Error e=new Error();
                     e.setTypeAndDescription("Warning","No existen elementos");
                     XML= new XStream();
-                    XML.alias("dataInfo", Error.class);
+                    XML.alias("message", Error.class);
                     return XML.toXML(e);
                 }
             } catch (HibernateException ex) {
@@ -294,7 +294,7 @@ public class IndicadoresMontoRestController {
                     Error e=new Error();
                     e.setTypeAndDescription("dataBaseError",ex.getMessage());
                     XML= new XStream();
-                    XML.alias("dataInfo", Error.class);
+                    XML.alias("message", Error.class);
                     return XML.toXML(e);
             }
         

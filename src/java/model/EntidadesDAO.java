@@ -85,7 +85,7 @@ private void iniciaOperacion() throws HibernateException
 
     /**
      *
-     * @param contacto
+     * @param id
      * @throws HibernateException
      */
     public void delete(Entidades id) throws HibernateException 

@@ -7,7 +7,9 @@
 package controller;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +19,7 @@ import model.util.Datos;
 import model.util.Error;
 import org.hibernate.HibernateException;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -86,7 +89,7 @@ public class IndicadoresRestController {
                    Error e=new Error();
                     e.setTypeAndDescription("Warning","No existen elementos");
                     XML= new XStream();
-                    XML.alias("dataInfo", Error.class);
+                    XML.alias("message", Error.class);
                     return XML.toXML(e);
                 }
             } catch (HibernateException ex) {
@@ -94,7 +97,7 @@ public class IndicadoresRestController {
                     Error e=new Error();
                     e.setTypeAndDescription("dataBaseError",ex.getMessage());
                     XML= new XStream();
-                    XML.alias("dataInfo", Error.class);
+                    XML.alias("message", Error.class);
                     return XML.toXML(e);
             }
         
@@ -174,7 +177,7 @@ public class IndicadoresRestController {
                     Error e=new Error();
                     e.setTypeAndDescription("Warning","No existe el elemeto solicitado con id:"+id);
                     XML= new XStream();
-                    XML.alias("dataInfo", Error.class);
+                    XML.alias("message", Error.class);
                     return XML.toXML(e);
                 }
             } catch (HibernateException ex) {
@@ -182,7 +185,7 @@ public class IndicadoresRestController {
                     Error e=new Error();
                     e.setTypeAndDescription("DataBaseError",ex.getMessage());
                     XML= new XStream();
-                    XML.alias("dataInfo", Error.class);
+                    XML.alias("message", Error.class);
                     return XML.toXML(e);
             }
         
@@ -191,4 +194,194 @@ public class IndicadoresRestController {
             response.setStatus(HttpServletResponse.SC_OK);
             return XML.toXML(elemento);          
             }
+            
+            
+            //************************POST***********************************************         
+    /**
+     *
+     * @param body
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(method=RequestMethod.POST,
+                    produces="application/json",consumes="application/json")
+            public String setJSON(@RequestBody String body,
+                                     HttpServletRequest request,
+                                     HttpServletResponse response) {
+              Indicadores m;
+              Gson JSON=new Gson();
+              try{
+                m=JSON.fromJson(body, Indicadores.class);
+              }
+              catch(JsonSyntaxException ex){
+                  response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                   Error er=new Error();
+                    er.setTypeAndDescription("JsonSyntax",ex.getMessage().split("java.io.EOFException:")[1]);
+                    JSON=new Gson();
+                     return JSON.toJson(er);
+              }
+              if(m.getDescripcion()==null){
+                  response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                  Error er=new Error();
+                    er.setTypeAndDescription("inconsistency","Los parametros no son los correctos verificar");
+                    JSON=new Gson();
+                     return JSON.toJson(er);
+              }
+              try {
+                IndicadoresDAO tabla=new IndicadoresDAO();
+                tabla.insert(m);
+            } catch (HibernateException ex) {
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    Error er=new Error();
+                    er.setTypeAndDescription("DataBaseError",ex.getMessage());
+                    JSON=new Gson();
+                    return JSON.toJson(er);
+            }
+             response.setStatus(HttpServletResponse.SC_OK);
+              Error er=new Error();
+                    er.setTypeAndDescription("successful","exito en la operacion");
+                    JSON=new Gson();
+              return JSON.toJson(er);
+            
+        }         
+            
+    /**
+     *
+     * @param body
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(method=RequestMethod.POST,
+                    produces="application/xml",consumes="application/xml")
+            public String setXML(@RequestBody String body,
+                                     HttpServletRequest request,
+                                     HttpServletResponse response) {
+              Indicadores m;
+              XStream XML;
+              XML = new XStream(new DomDriver());
+              try{
+                 XML.setClassLoader(Indicadores.class.getClassLoader());
+                 XML.alias("indicador",Indicadores.class);
+                m=(Indicadores)XML.fromXML(body);
+              }
+              catch(Exception ex){
+                  response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                   Error er=new Error();
+                    er.setTypeAndDescription("XMLSyntax",ex.getMessage());
+                    XML.alias("message", Error.class);
+                    return XML.toXML(er);
+              }
+              if(m.getDescripcion()==null){
+                  response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                  Error er=new Error();
+                    er.setTypeAndDescription("inconsistency","Los parametros no son los correctos verificar");
+                   XML.alias("message", Error.class);
+                    return XML.toXML(er);
+              }
+              try {
+                IndicadoresDAO tabla=new IndicadoresDAO();
+                tabla.insert(m);
+            } catch (HibernateException ex) {
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    Error er=new Error();
+                    er.setTypeAndDescription("DataBaseError",ex.getMessage());
+                    XML.alias("message", Error.class);
+                    return XML.toXML(er);
+            }
+             response.setStatus(HttpServletResponse.SC_OK);
+              Error er=new Error();
+                    er.setTypeAndDescription("successful","exito en la operacion");
+                   XML.alias("message", Error.class);
+                    return XML.toXML(er);
+            
+        } 
+            
+   //***********************DELETE**********************************************         
+            /**
+     *
+     * @param id
+     * @param request
+     * @param response
+     * @return JSON
+     */     
+        @RequestMapping(value="/{id}",
+                        method=RequestMethod.DELETE,
+                        produces="application/json")
+            public String updateJSON(@PathVariable("id") String id,
+                                     HttpServletRequest request,
+                                     HttpServletResponse response) {
+              Indicadores elemento;
+              IndicadoresDAO tabla=new IndicadoresDAO();
+              Gson JSON;
+              JSON = new Gson();
+             
+           try {
+                elemento=tabla.selectById(id);
+                if(elemento==null){
+                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    Error er=new Error();
+                    er.setTypeAndDescription("Warning","No existe el elemeto solicitado con id:"+id);
+                    return JSON.toJson(er);
+                }
+                 else
+                    tabla.delete(elemento);
+            } catch (HibernateException ex) {
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    Error er=new Error();
+                    er.setTypeAndDescription("DataBaseError",ex.getMessage());
+                   return JSON.toJson(er);
+            }            
+             response.setStatus(HttpServletResponse.SC_OK);
+             Error er=new Error();
+             er.setTypeAndDescription("successful","exito en la operacion");
+            return JSON.toJson(er);
+            
+        }  
+            
+       /**
+     *
+     * @param id
+     * @param request
+     * @param response
+     * @return XML
+     */     
+        @RequestMapping(value="/{id}",
+                        method=RequestMethod.DELETE,
+                        produces="application/xml")
+            public String updateXML(@PathVariable("id") String id,
+                                     HttpServletRequest request,
+                                     HttpServletResponse response) {
+              Indicadores elemento;
+              IndicadoresDAO tabla=new IndicadoresDAO();
+              XStream XML;
+              XML = new XStream();
+             
+           try {
+                elemento=tabla.selectById(id);
+                if(elemento==null){
+                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    Error er=new Error();
+                    er.setTypeAndDescription("Warning","No existe el elemeto solicitado con id:"+id);
+                    XML.alias("message", Error.class);
+                    return XML.toXML(er);
+                }
+                else
+                    tabla.delete(elemento);
+            } catch (HibernateException ex) {
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    Error er=new Error();
+                    er.setTypeAndDescription("DataBaseError",ex.getMessage());
+                    XML.alias("message", Error.class);
+                    return XML.toXML(er);
+            }            
+             response.setStatus(HttpServletResponse.SC_OK);
+             Error er=new Error();
+             er.setTypeAndDescription("successful","exito en la operacion");
+             XML.alias("message", Error.class);
+             return XML.toXML(er);
+            
+        } 
+            
 }

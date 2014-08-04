@@ -13,9 +13,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.EntidadesDAO;
 import model.MunicipiosDAO;
-import model.persistencia.Entidades;
 import model.persistencia.Municipios;
 import model.util.Datos;
 import model.util.Error;
@@ -101,7 +99,7 @@ public class MunicipiosRestController {
                     Error e=new Error();
                     e.setTypeAndDescription("Warning","No existen elementos");
                     XML= new XStream();
-                    XML.alias("dataInfo",Error.class);
+                    XML.alias("message",Error.class);
                     return XML.toXML(e);
                 }
             } catch (HibernateException ex) {
@@ -109,7 +107,7 @@ public class MunicipiosRestController {
                     Error e=new Error();
                     e.setTypeAndDescription("dataBaseError",ex.getMessage());
                     XML= new XStream();
-                    XML.alias("dataInfo",Error.class);
+                    XML.alias("message",Error.class);
                     return XML.toXML(e);
             }
         
@@ -188,7 +186,7 @@ public class MunicipiosRestController {
                     Error e=new Error();
                     e.setTypeAndDescription("Warning","No existe el elemeto solicitado con id:"+id);
                     XML= new XStream();
-                    XML.alias("dataInfo", Error.class);
+                    XML.alias("message", Error.class);
                     return XML.toXML(e);
                 }
             } catch (HibernateException ex) {
@@ -196,7 +194,7 @@ public class MunicipiosRestController {
                     Error e=new Error();
                     e.setTypeAndDescription("DataBaseError",ex.getMessage());
                     XML= new XStream();
-                    XML.alias("dataInfo",Error.class);
+                    XML.alias("message",Error.class);
                     return XML.toXML(e);
             }
         
@@ -280,14 +278,14 @@ public class MunicipiosRestController {
                   response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                    Error er=new Error();
                     er.setTypeAndDescription("XMLSyntax",ex.getMessage());
-                    XML.alias("dataInfo", Error.class);
+                    XML.alias("message", Error.class);
                     return XML.toXML(er);
               }
               if(m.getDescMuniciopio()==null || m.getIdEntidad()==null){
                   response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                   Error er=new Error();
                     er.setTypeAndDescription("inconsistency","Los parametros no son los correctos verificar");
-                   XML.alias("dataInfo", Error.class);
+                   XML.alias("message", Error.class);
                     return XML.toXML(er);
               }
               try {
@@ -297,16 +295,103 @@ public class MunicipiosRestController {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     Error er=new Error();
                     er.setTypeAndDescription("DataBaseError",ex.getMessage());
-                    XML.alias("dataInfo", Error.class);
+                    XML.alias("message", Error.class);
                     return XML.toXML(er);
             }
              response.setStatus(HttpServletResponse.SC_OK);
               Error er=new Error();
                     er.setTypeAndDescription("successful","exito en la operacion");
-                   XML.alias("dataInfo", Error.class);
+                   XML.alias("message", Error.class);
                     return XML.toXML(er);
             
-        }         
+        }  
+            
+            
+   //****************************DELETE***********************************************
+            
+    /**
+     *
+     * @param id
+     * @param request
+     * @param response
+     * @return JSON
+     */     
+        @RequestMapping(value="/{id}",
+                        method=RequestMethod.DELETE,
+                        produces="application/json")
+            public String updateJSON(@PathVariable("id") int id,
+                                     HttpServletRequest request,
+                                     HttpServletResponse response) {
+              Municipios elemento;
+              MunicipiosDAO tabla=new MunicipiosDAO();
+              Gson JSON;
+              JSON = new Gson();
+             
+           try {
+                elemento=tabla.selectById(id);
+                //System.out.println(elemento.getIdMunicipio());
+                if(elemento==null){
+                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    Error er=new Error();
+                    er.setTypeAndDescription("Warning","No existe el elemeto solicitado con id:"+id);
+                    return JSON.toJson(er);
+                }
+                tabla.delete(elemento);
+            } catch (HibernateException ex) {
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    Error er=new Error();
+                    er.setTypeAndDescription("DataBaseError",ex.getMessage());
+                   return JSON.toJson(er);
+            }            
+             response.setStatus(HttpServletResponse.SC_OK);
+             Error er=new Error();
+             er.setTypeAndDescription("successful","exito en la operacion");
+            return JSON.toJson(er);
+            
+        }  
+            
+       /**
+     *
+     * @param id
+     * @param request
+     * @param response
+     * @return XML
+     */     
+        @RequestMapping(value="/{id}",
+                        method=RequestMethod.DELETE,
+                        produces="application/xml")
+            public String updateXML(@PathVariable("id") int id,
+                                     HttpServletRequest request,
+                                     HttpServletResponse response) {
+              Municipios elemento;
+              MunicipiosDAO tabla=new MunicipiosDAO();
+              XStream XML;
+              XML = new XStream();
+             
+           try {
+                elemento=tabla.selectById(id);
+                if(elemento==null){
+                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    Error er=new Error();
+                    er.setTypeAndDescription("Warning","No existe el elemeto solicitado con id:"+id);
+                    XML.alias("message", Error.class);
+                    return XML.toXML(er);
+                }
+                tabla.delete(elemento);
+            } catch (HibernateException ex) {
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    Error er=new Error();
+                    er.setTypeAndDescription("DataBaseError",ex.getMessage());
+                    XML.alias("message", Error.class);
+                    return XML.toXML(er);
+            }            
+             response.setStatus(HttpServletResponse.SC_OK);
+             Error er=new Error();
+             er.setTypeAndDescription("successful","exito en la operacion");
+             XML.alias("message", Error.class);
+             //return XML.toXML(er);
+            return elemento.getIdMunicipio().toString();
+        }           
             
             
 }
