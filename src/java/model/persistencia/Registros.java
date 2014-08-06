@@ -29,14 +29,10 @@ public class Registros implements Serializable {
     private Integer cantidad;
     @Column(name = "idhash")
     private Integer idhash; 
-      @Column(name = "id_entidad")
-    private Integer idEntidad;
     @Column(name = "id_indicador")
     private String idIndicador;
     @Column(name = "id_municipio")
     private Integer idMunicipio;   
-    @Column(name = "id_temas_nivel_3")
-    private Integer idTemasNivel3;
     
   
 
@@ -56,14 +52,7 @@ public class Registros implements Serializable {
     }
     
 
-    public Registros(Integer anio, Integer cantidad, String idIndicador, Integer idMunicipio, Integer idTemasNivel3) {
-        this.anio = anio;
-        this.cantidad = cantidad;
-        this.idIndicador = idIndicador;
-        this.idMunicipio = idMunicipio;
-        this.idTemasNivel3 = idTemasNivel3;
-    }
-    
+   
 
     public Integer getIdRegistros() {
         return idRegistros;
@@ -112,21 +101,7 @@ public class Registros implements Serializable {
         this.idMunicipio = idMunicipio;
     }
 
-    public Integer getIdTemasNivel3() {
-        return idTemasNivel3;
-    }
-
-    public void setIdTemasNivel3(Integer idTemasNivel3) {
-        this.idTemasNivel3 = idTemasNivel3;
-    }
     
-     public Integer getIdEntidad() {
-        return idEntidad;
-    }
-
-    public void setIdEntidad(Integer idEntidad) {
-        this.idEntidad = idEntidad;
-    }
  
 
     @Override
@@ -134,9 +109,6 @@ public class Registros implements Serializable {
         int has = 0;
         has += (anio != null ? anio.hashCode() : 0);
         has += (idIndicador != null ? idIndicador.hashCode() : 0);
-        has += (idMunicipio != null ? idMunicipio.hashCode() : 0);
-        has += (idTemasNivel3 != null ? idTemasNivel3.hashCode() : 0);
-        has += (idEntidad != null ? idEntidad.hashCode() : 0);
         return has;
     }
 

@@ -26,7 +26,7 @@ public class Municipios implements Serializable {
     @Column(name = "id_municipio")
     private Integer idMunicipio;
     @Column(name = "desc_municiopio")
-    private String descMuniciopio;
+    private String descMunicipio;
     @Column(name = "id_entidad")
     private Integer idEntidad;
 
@@ -39,15 +39,15 @@ public class Municipios implements Serializable {
 
     public Municipios(Integer idMunicipio, String descMuniciopio) {
         this.idMunicipio = idMunicipio;
-        this.descMuniciopio = descMuniciopio;
+        this.descMunicipio = descMuniciopio;
     }
 
     public Municipios(String descMuniciopio) {
-        this.descMuniciopio = descMuniciopio;
+        this.descMunicipio = descMuniciopio;
     }
 
     public Municipios(String descMuniciopio, Integer idEntidad) {
-        this.descMuniciopio = descMuniciopio;
+        this.descMunicipio = descMuniciopio;
         this.idEntidad = idEntidad;
     }
     
@@ -62,11 +62,11 @@ public class Municipios implements Serializable {
     }
 
     public String getDescMuniciopio() {
-        return descMuniciopio;
+        return descMunicipio;
     }
 
     public void setDescMuniciopio(String descMuniciopio) {
-        this.descMuniciopio = descMuniciopio;
+        this.descMunicipio = descMuniciopio;
     }
 
     public Integer getIdEntidad() {

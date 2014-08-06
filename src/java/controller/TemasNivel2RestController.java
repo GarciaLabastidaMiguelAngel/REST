@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author miguel
  */
 @RestController
-@RequestMapping("api/temasNivel2")
+@RequestMapping("api/temasnivel2")
 public class TemasNivel2RestController {
        
    

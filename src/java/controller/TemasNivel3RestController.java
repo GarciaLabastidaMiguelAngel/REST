@@ -14,6 +14,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.TemasNivel3DAO;
+import model.persistencia.Indicadores;
 import model.persistencia.TemasNivel3;
 import model.util.Datos;
 import model.util.Error;
@@ -29,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author miguel
  */
 @RestController
-@RequestMapping("api/temasNivel3")
+@RequestMapping("api/temasnivel3")
 public class TemasNivel3RestController {
        
    
@@ -197,6 +198,97 @@ public class TemasNivel3RestController {
             
             
             
+             /**
+     *
+     * @param id
+     * @param request
+     * @param response
+     * @return JSON
+     * este metodo se encarga de generar la lista de municipios que pertecen 
+     * a una entidad con ID especifico 
+     */    
+    
+    @RequestMapping(value="/{id}/indicadores",
+                    method=RequestMethod.GET,
+                    produces="application/json")    
+            public String getIndicadoresJSON(@PathVariable("id") int id,
+                                            HttpServletRequest request,
+                                          HttpServletResponse response) {            
+            TemasNivel3DAO tabla=new TemasNivel3DAO();
+            Gson JSON;
+            List<Indicadores> lista;
+            try {
+                lista=tabla.selectAllIndicadores(id);
+                if(lista.isEmpty()){
+                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    Error e=new Error();
+                    e.setTypeAndDescription("Warning","No existen elementos");
+                    JSON=new Gson();
+                     return JSON.toJson(e);
+                }
+            } catch (HibernateException ex) {
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    Error e=new Error();
+                    e.setTypeAndDescription("DataBase",ex.getMessage());
+                    JSON=new Gson();
+                     return JSON.toJson(e);
+            }
+        
+            Datos<Indicadores> datos = new Datos<>();
+            datos.setDatos(lista);
+            JSON=new Gson();
+            response.setStatus(HttpServletResponse.SC_OK);
+            return JSON.toJson(datos);
+            }
+            
+ 
+            
+    /**
+     *
+     * @param id
+     * @param request
+     * @param response
+     * @return XML
+     * este metodo se encarga de generar la lista de municipios que pertecen 
+     * a una entidad con ID especifico 
+     */
+    @RequestMapping(value="/{id}/indicadores",
+                    method=RequestMethod.GET,
+                    produces="application/xml")     
+            public String getIndicadoresXML(@PathVariable("id") int id,
+                                            HttpServletRequest request,
+                                            HttpServletResponse response) { 
+            TemasNivel3DAO tabla=new TemasNivel3DAO();
+            XStream XML;
+            List<Indicadores> lista;
+            
+            try {
+                lista=tabla.selectAllIndicadores(id);     
+                
+               if(lista.isEmpty()){
+                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    Error e=new Error();
+                    e.setTypeAndDescription("Warning","No existen elementos");
+                    XML= new XStream();
+                    XML.alias("message", Error.class);
+                    return XML.toXML(e);
+                }
+            } catch (HibernateException ex) {
+                    response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    Error e=new Error();
+                    e.setTypeAndDescription("dataBaseError",ex.getMessage());
+                    XML= new XStream();
+                    XML.alias("message", Error.class);
+                    return XML.toXML(e);
+            }
+        
+            Datos<Indicadores> datos=new Datos<>();
+            datos.setDatos(lista);
+            XML= new XStream();
+            XML.alias("indicador",Indicadores.class);       
+            response.setStatus(HttpServletResponse.SC_OK);
+            return XML.toXML(lista);
+            }
                          //************************POST***********************************************         
     /**
      *

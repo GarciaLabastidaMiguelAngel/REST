@@ -7,6 +7,7 @@
 package model;
 
 import java.util.List;
+import model.persistencia.Indicadores;
 import model.persistencia.TemasNivel3;
 import model.util.HibernateUtil;
 import org.hibernate.HibernateException;
@@ -162,5 +163,28 @@ private void iniciaOperacion() throws HibernateException
         throw error;
     return listatemasNivel3; 
 }
+    
+     public List<Indicadores> selectAllIndicadores(int id) throws HibernateException
+{ 
+    List<Indicadores> listaIndicadores = null;  
+    HibernateException error=null;
+    try 
+    { 
+        iniciaOperacion(); 
+        listaIndicadores = sesion.createQuery("from Indicadores where id_temas_nivel_3="+id).list();
+    } 
+    
+        catch(HibernateException e){
+                error=e;
+                 tx.rollback();
+     }
+   finally { 
+        sesion.close(); 
+    }  
+    if(error!=null)
+        throw error;
+    return listaIndicadores; 
+}
+
 
 }

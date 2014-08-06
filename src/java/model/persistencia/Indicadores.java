@@ -26,6 +26,8 @@ import javax.persistence.Id;
     private String descripcion;
     @Column(name = "nota")
     private String nota;
+    @Column(name = "id_temas_nivel_3")
+    private int id_temas_nivel_3;
    
 
     public Indicadores() {

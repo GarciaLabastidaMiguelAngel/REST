@@ -29,14 +29,14 @@ private void iniciaOperacion() throws HibernateException
     
     
     
-  public List<Registros> selectAllResgistrosByIdIndicador(String idIndicador) throws HibernateException
+  public List<Registros> selectAllResgistrosByIdIndicadorAndMunicipio(String idIndicador,int municipio) throws HibernateException
 { 
     List<Registros> listaRegistros = null;  
     HibernateException error=null;
     try 
     { 
         iniciaOperacion(); 
-        listaRegistros = sesion.createQuery("from Registros  where idIndicador='"+idIndicador+"'").list();
+        listaRegistros = sesion.createQuery("from Registros  where idIndicador='"+idIndicador+"' and idMunicipio="+municipio).list();
     } 
     
         catch(HibernateException e){
