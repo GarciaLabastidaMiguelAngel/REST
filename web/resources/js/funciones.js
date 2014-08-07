@@ -316,6 +316,10 @@ function asignarEventos(){
                             });
                     }
                     
+                },
+                error:function(){
+                                    alert("no existen registros del indicador\nen el municipio especificado");
+                    
                 }
             });
                
