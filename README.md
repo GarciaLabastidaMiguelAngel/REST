@@ -41,6 +41,7 @@ curl -X GET \
 ###******************************************
 ###		municipios
 ###******************************************
+```html
 curl -X GET \
   -H "accept: application/json" \
   http://localhost:8080/api/municipios
@@ -74,10 +75,12 @@ curl -X GET \
   http://localhost:8080/api/municipios/0
 
 {"idMunicipio":0,"descMunicipio":"Nacional","idEntidad":0}
+```
 
 ###******************************************
 ###		temas nivel 1,2,3
 ###******************************************
+```html
 
 curl -X GET \
   -H "accept: application/xml" \
@@ -178,10 +181,11 @@ curl -X GET \
   http://localhost:8080/api/temasnivel3/0
 
 {"idTemasNivel3":0,"descripcion":"Caracteristicas del empleo de la poblacion","idTemasNivel2":0}
-
+```
 ###******************************************
 ###		indicadores
 ###******************************************
+```html
 curl -X GET \
   -H "accept: application/json" \
   http://localhost:8080/api/indicadores
@@ -220,7 +224,7 @@ curl -X GET \
   <descripcion>Poblacion de 14 y mas anios</descripcion>
   <id_temas_nivel_3>0</id_temas_nivel_3>
 </indicador>
-
+```
 ###****************************************
 ###     registros de indicadores
 ###****************************************
@@ -228,7 +232,7 @@ curl -X GET \
 #### que hay de ese indicador especificando su año la cantidad y el municipio
 #### del registro, entonces puede regresar registros del 
 #### el mismo año e igual cantidad pero que pertenece a otro municipio
-
+```html
 curl -X GET \
   -H "accept: application/json" \
   http://localhost:8080/api/indicadoresmontos/1007000018/municipios
@@ -256,9 +260,10 @@ curl -X GET \
     <idMunicipio>1</idMunicipio>
   </registro>
 </list>
-
+```
 ####ahora si especificamos solo un municipio solo nos dara
 ####informacion de el municipio indicado
+```html
 curl -X GET \
   -H "accept: application/xml" \
   http://localhost:8080/api/indicadoresmontos/1007000018/municipios/1
@@ -279,3 +284,4 @@ curl -X GET \
   http://localhost:8080/api/indicadoresmontos/1007000018/municipios/1
 
 {"data":[{"anio":2010,"cantidad":485417},{"anio":2011,"cantidad":501089}]}
+```
