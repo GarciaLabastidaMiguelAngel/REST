@@ -5,7 +5,7 @@
 ###*****************************************
 ###		entidades
 ###*****************************************
-
+```html
 curl -X GET \
   -H "accept: application/json" \
   http://localhost:8080/api/entidades
@@ -16,12 +16,12 @@ curl -X GET \
   -H "accept: application/xml" \
   http://localhost:8080/api/entidades
 
-&ltlist&gt
-  &ltentidad&gt
-    &ltidEntidad&gt0&lt/idEntidad&gt
-    &ltdescEntidad&gtNacional&lt/descEntidad&gt
-  &lt/entidad&gt
-&lt/list&gt
+<list>
+  <entidad>
+    <idEntidad>0</idEntidad>
+    <descEntidad>Nacional</descEntidad>
+  </entidad>
+</list>
 
 curl -X GET \
   -H "accept: application/json" \
@@ -33,10 +33,11 @@ curl -X GET \
   -H "accept: application/xml" \
   http://localhost:8080/api/entidades/0
 
-&ltentidad&gt
-  &ltidEntidad&gt0&lt/idEntidad&gt
-  &ltdescEntidad&gtNacional&lt/descEntidad&gt
-&lt/entidad&gt
+<entidad>
+  <idEntidad>0</idEntidad>
+  <descEntidad>Nacional</descEntidad>
+</entidad>
+```
 ###******************************************
 ###		municipios
 ###******************************************
@@ -50,23 +51,23 @@ curl -X GET \
   -H "accept: application/xml" \
   http://localhost:8080/api/municipios
 
-&ltlist&gt
-  &ltmunicipio&gt
-    &ltidMunicipio&gt0&lt/idMunicipio&gt
-    &ltdescMunicipio&gtNacional&lt/descMunicipio&gt
-    &ltidEntidad&gt0&lt/idEntidad&gt
-  &lt/municipio&gt
-&lt/list&gt
+<list>
+  <municipio>
+    <idMunicipio>0</idMunicipio>
+    <descMunicipio>Nacional</descMunicipio>
+    <idEntidad>0</idEntidad>
+  </municipio>
+</list>
 
 curl -X GET \
   -H "accept: application/xml" \
   http://localhost:8080/api/municipios/0
 
-&ltmunicipio&gt
-  &ltidMunicipio&gt0&lt/idMunicipio&gt
-  &ltdescMunicipio&gtNacional&lt/descMunicipio&gt
-  &ltidEntidad&gt0&lt/idEntidad&gt
-&lt/municipio&gt
+<municipio>
+  <idMunicipio>0</idMunicipio>
+  <descMunicipio>Nacional</descMunicipio>
+  <idEntidad>0</idEntidad>
+</municipio>
 
 curl -X GET \
   -H "accept: application/json" \
@@ -82,12 +83,12 @@ curl -X GET \
   -H "accept: application/xml" \
   http://localhost:8080/api/temasnivel1
 
-&ltlist&gt
-  &ltTemas-Nivel-1&gt
-    &ltidTemasNivel1&gt0&lt/idTemasNivel1&gt
-    &ltdescripcion&gtSociedad y Gobierno&lt/descripcion&gt
-  &lt/Temas-Nivel-1&gt
-&lt/list&gt
+<list>
+  <Temas-Nivel-1>
+    <idTemasNivel1>0</idTemasNivel1>
+    <descripcion>Sociedad y Gobierno</descripcion>
+  </Temas-Nivel-1>
+</list>
 
 curl -X GET \
   -H "accept: application/json" \
@@ -105,22 +106,22 @@ curl -X GET \
   -H "accept: application/xml" \
   http://localhost:8080/api/temasnivel1/0
 
-&ltTema-Nivel-1&gt
-  &ltidTemasNivel1&gt0&lt/idTemasNivel1&gt
-  &ltdescripcion&gtSociedad y Gobierno&lt/descripcion&gt
-&lt/Tema-Nivel-1&gt
+<Tema-Nivel-1>
+  <idTemasNivel1>0</idTemasNivel1>
+  <descripcion>Sociedad y Gobierno</descripcion>
+</Tema-Nivel-1>
 
 curl -X GET \
   -H "accept: application/xml" \
   http://localhost:8080/api/temasnivel2
 
-&ltlist&gt
-  &lttema-nivel-2&gt
-    &ltidTemasNivel2&gt0&lt/idTemasNivel2&gt
-    &ltdescripcion&gtEmpleo y relaciones laborales&lt/descripcion&gt
-    &ltidTemasNivel1&gt0&lt/idTemasNivel1&gt
-  &lt/tema-nivel-2&gt
-&lt/list&gt
+<list>
+  <tema-nivel-2>
+    <idTemasNivel2>0</idTemasNivel2>
+    <descripcion>Empleo y relaciones laborales</descripcion>
+    <idTemasNivel1>0</idTemasNivel1>
+  </tema-nivel-2>
+</list>
 
 curl -X GET \
   -H "accept: application/json" \
@@ -132,11 +133,11 @@ curl -X GET \
   -H "accept: application/xml" \
   http://localhost:8080/api/temasnivel2/0
 
-&ltTema-Nivel-2&gt
-  &ltidTemasNivel2&gt0&lt/idTemasNivel2&gt
-  &ltdescripcion&gtEmpleo y relaciones laborales&lt/descripcion&gt
-  &ltidTemasNivel1&gt0&lt/idTemasNivel1&gt
-&lt/Tema-Nivel-2&gt
+<Tema-Nivel-2>
+  <idTemasNivel2>0</idTemasNivel2>
+  <descripcion>Empleo y relaciones laborales</descripcion>
+  <idTemasNivel1>0</idTemasNivel1>
+</Tema-Nivel-2>
 
 curl -X GET \
   -H "accept: application/json" \
@@ -148,13 +149,13 @@ curl -X GET \
   -H "accept: application/xml" \
   http://localhost:8080/api/temasnivel3
 
-&ltlist&gt
-  &lttema-nivel-3&gt
-    &ltidTemasNivel3&gt0&lt/idTemasNivel3&gt
-    &ltdescripcion&gtCaracteristicas del empleo de la poblacion&lt/descripcion&gt
-    &ltidTemasNivel2&gt0&lt/idTemasNivel2&gt
-  &lt/tema-nivel-3&gt
-&lt/list&gt
+<list>
+  <tema-nivel-3>
+    <idTemasNivel3>0</idTemasNivel3>
+    <descripcion>Caracteristicas del empleo de la poblacion</descripcion>
+    <idTemasNivel2>0</idTemasNivel2>
+  </tema-nivel-3>
+</list>
 
 curl -X GET \
   -H "accept: application/json" \
@@ -166,11 +167,11 @@ curl -X GET \
   -H "accept: application/xml" \
   http://localhost:8080/api/temasnivel3/0
 
-&ltTema-Nivel-3&gt
-  &ltidTemasNivel3&gt0&lt/idTemasNivel3&gt
-  &ltdescripcion&gtCaracteristicas del empleo de la poblacion&lt/descripcion&gt
-  &ltidTemasNivel2&gt0&lt/idTemasNivel2&gt
-&lt/Tema-Nivel-3&gt
+<Tema-Nivel-3>
+  <idTemasNivel3>0</idTemasNivel3>
+  <descripcion>Caracteristicas del empleo de la poblacion</descripcion>
+  <idTemasNivel2>0</idTemasNivel2>
+</Tema-Nivel-3>
 
 curl -X GET \
   -H "accept: application/json" \
@@ -191,18 +192,18 @@ curl -X GET \
   -H "accept: application/xml" \
   http://localhost:8080/api/indicadores
 
-&ltlist&gt
-  &ltindicador&gt
-    &ltidIndicador&gt1007000018&lt/idIndicador&gt
-    &ltdescripcion&gtPoblacion de 14 y mas anios&lt/descripcion&gt
-    &ltid_temas_nivel_3&gt0&lt/id_temas_nivel_3&gt
-  &lt/indicador&gt
-  &ltindicador&gt
-    &ltidIndicador&gt1007000019&lt/idIndicador&gt
-    &ltdescripcion&gtPoblacion economicamente activa&lt/descripcion&gt
-    &ltid_temas_nivel_3&gt0&lt/id_temas_nivel_3&gt
-  &lt/indicador&gt
-&lt/list&gt
+<list>
+  <indicador>
+    <idIndicador>1007000018</idIndicador>
+    <descripcion>Poblacion de 14 y mas anios</descripcion>
+    <id_temas_nivel_3>0</id_temas_nivel_3>
+  </indicador>
+  <indicador>
+    <idIndicador>1007000019</idIndicador>
+    <descripcion>Poblacion economicamente activa</descripcion>
+    <id_temas_nivel_3>0</id_temas_nivel_3>
+  </indicador>
+</list>
 
 curl -X GET \
   -H "accept: application/json" \
@@ -214,11 +215,11 @@ curl -X GET \
   -H "accept: application/xml" \
   http://localhost:8080/api/indicadores/1007000018
 
-&ltindicador&gt
-  &ltidIndicador&gt1007000018&lt/idIndicador&gt
-  &ltdescripcion&gtPoblacion de 14 y mas anios&lt/descripcion&gt
-  &ltid_temas_nivel_3&gt0&lt/id_temas_nivel_3&gt
-&lt/indicador&gt
+<indicador>
+  <idIndicador>1007000018</idIndicador>
+  <descripcion>Poblacion de 14 y mas anios</descripcion>
+  <id_temas_nivel_3>0</id_temas_nivel_3>
+</indicador>
 
 ###****************************************
 ###     registros de indicadores
@@ -238,23 +239,23 @@ curl -X GET \
   -H "accept: application/xml" \
   http://localhost:8080/api/indicadoresmontos/1007000018/municipios
 
-&ltlist&gt
-  &ltregistro&gt
-    &ltanio&gt2010&lt/anio&gt
-    &ltcantidad&gt83400615&lt/cantidad&gt
-    &ltidMunicipio&gt0&lt/idMunicipio&gt
-  &lt/registro&gt
-  &ltregistro&gt
-    &ltanio&gt2010&lt/anio&gt
-    &ltcantidad&gt485417&lt/cantidad&gt
-    &ltidMunicipio&gt1&lt/idMunicipio&gt
-  &lt/registro&gt
-  &ltregistro&gt
-    &ltanio&gt2011&lt/anio&gt
-    &ltcantidad&gt501089&lt/cantidad&gt
-    &ltidMunicipio&gt1&lt/idMunicipio&gt
-  &lt/registro&gt
-&lt/list&gt
+<list>
+  <registro>
+    <anio>2010</anio>
+    <cantidad>83400615</cantidad>
+    <idMunicipio>0</idMunicipio>
+  </registro>
+  <registro>
+    <anio>2010</anio>
+    <cantidad>485417</cantidad>
+    <idMunicipio>1</idMunicipio>
+  </registro>
+  <registro>
+    <anio>2011</anio>
+    <cantidad>501089</cantidad>
+    <idMunicipio>1</idMunicipio>
+  </registro>
+</list>
 
 ####ahora si especificamos solo un municipio solo nos dara
 ####informacion de el municipio indicado
@@ -262,16 +263,16 @@ curl -X GET \
   -H "accept: application/xml" \
   http://localhost:8080/api/indicadoresmontos/1007000018/municipios/1
 
-&ltlist&gt
-  &ltregistro&gt
-    &ltanio&gt2010&lt/anio&gt
-    &ltcantidad&gt485417&lt/cantidad&gt
-  &lt/registro&gt
-  &ltregistro&gt
-    &ltanio&gt2011&lt/anio&gt
-    &ltcantidad&gt501089&lt/cantidad&gt
-  &lt/registro&gt
-&lt/list&gt
+<list>
+  <registro>
+    <anio>2010</anio>
+    <cantidad>485417</cantidad>
+  </registro>
+  <registro>
+    <anio>2011</anio>
+    <cantidad>501089</cantidad>
+  </registro>
+</list>
 
 curl -X GET \
   -H "accept: application/json" \
