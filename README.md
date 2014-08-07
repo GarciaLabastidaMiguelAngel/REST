@@ -178,9 +178,9 @@ curl -X GET \
 
 {"idTemasNivel3":0,"descripcion":"Caracteristicas del empleo de la poblacion","idTemasNivel2":0}
 
-//******************************************
-		indicadores
-//******************************************
+###******************************************
+###		indicadores
+###******************************************
 curl -X GET \
   -H "accept: application/json" \
   http://localhost:8080/api/indicadores
