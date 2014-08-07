@@ -12,11 +12,11 @@ package model.util.schemas;
  *
  * @author miguel
  */
-public class DatosRegistros {
+public class DatosRegistrosIdMunicipio {
     private int anio;
     private int cantidad;
 
-    public DatosRegistros(int anio, int cantidad) {
+    public DatosRegistrosIdMunicipio(int anio, int cantidad) {
         this.anio = anio;
         this.cantidad = cantidad;
     }
@@ -37,7 +37,7 @@ public class DatosRegistros {
         this.cantidad = cantidad;
     }
 
-    public DatosRegistros() {
+    public DatosRegistrosIdMunicipio() {
     }
 
    

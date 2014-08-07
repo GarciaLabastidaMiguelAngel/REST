@@ -254,26 +254,73 @@ function asignarEventos(){
        */
       $("#boton-1").click(
             function(){
-                var randomScalingFactor = function(){ return Math.round(Math.random()*10000);};
-
-                    var barChartData = {
-                            labels : ["2014","2013","2012","2011","2010","2009","2008"],
-                            datasets : [
-                                    {
-                                            fillColor : "rgba(255,0,0,0.8)",
-                                            strokeColor : "rgba(255,255,255,0.8)",
-                                            highlightFill: "rgba(0,0,255,0.75)",
-                                            highlightStroke: "rgba(220,220,0,1)",
-                                            data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
-                                    }
-                            ]
+                if($("#entidades").val()==="-1"){
+                    alert("Debes seleccionar una entidad y municipio...");
+                    return;
+                }
+                if($("#municipios").val()==="-1"){
+                    alert("Debes seleccionar un municipio...");
+                    return;
+                }
+                
+                 if($("#temas1").val()==="-1"){
+                    alert("Debes seleccionar un tema de nivel 1,2 y 3...");
+                    return;
+                }
+                
+                if($("#temas2").val()==="-1"){
+                    alert("Debes seleccionar un tema de nivel 2 y 3...");
+                    return;
+                }
+                
+                if($("#temas3").val()==="-1"){
+                    alert("Debes seleccionar un tema de nivel 3...");
+                    return;
+                }
+                if($("#indicadores").val()==="-1"){
+                    alert("Debes seleccionar un indicador...");
+                    return;
+                }
+                    
+            $.ajax({
+                type: "GET",
+                url: "http://"+dominio+"/api/indicadoresmontos/"+$("#indicadores").val()+"/municipios/"+$("#municipios").val(),
+                dataType: "json",
+                success: function(json){
+                    if(json.data){
+                        var labelsext=new Array();
+                        var dataext=new Array();
+                        for(var i=0;i<json.data.length;++i){
+                            labelsext[i]=json.data[i].anio;
+                            dataext[i]=json.data[i].cantidad;
+                        }
+                        console.log(labelsext);
+                        console.log(dataext);
+                           var barChartData = {
+                                            labels : labelsext,
+                                            datasets : [
+                                                    {
+                                                            fillColor : "rgba(255,0,0,0.8)",
+                                                            strokeColor : "rgba(255,255,255,0.8)",
+                                                            highlightFill: "rgba(0,0,255,0.75)",
+                                                            highlightStroke: "rgba(220,220,0,1)",
+                                                            data :dataext
+                                                        }
+                                            ]
 
                             };
+                            
                             var ctx = document.getElementById("canvas").getContext("2d");
                             window.myBar = new Chart(ctx).Bar(barChartData, {
                                     responsive : true
                             });
-                        }  
+                    }
+                    
+                }
+            });
+               
+                 
+         }  
         );
 /*
  * se aisgna evento a select entidades para cargar municipios segun la entidad
@@ -334,6 +381,23 @@ function asignarEventos(){
                                      municipios[0].selected=true;
                         }
                 });   
+        }
+        else{
+                                    var municipios=document.getElementById("municipios");
+                                    if ( municipios.hasChildNodes() ){
+                                        while ( municipios.childNodes.length >= 1 ) {
+                                            municipios.removeChild( municipios.firstChild );
+                                            }
+                                    }
+                                    var option;
+                                    var text;
+                                    var m;
+                                    option=document.createElement("option");
+                                     option.value="-1";
+                                     text=document.createTextNode("Seleccione un Municipio");
+                                     option.appendChild(text);
+                                     municipios.appendChild(option);
+                                     municipios[0].selected=true;
         }
         
     });
@@ -610,7 +674,7 @@ function asignarEventos(){
                                   for(var llave in json.data){
                                         t=json.data[llave];
                                         option=document.createElement("option");
-                                        option.value=t.id_temas_nivel_3;
+                                        option.value=t.idIndicador;
                                         text=document.createTextNode(t.descripcion);
                                         option.appendChild(text);
                                         indicadores.appendChild(option);

@@ -52,6 +52,29 @@ private void iniciaOperacion() throws HibernateException
 }
   
   
+    public List<Registros> selectAllResgistrosByIdIndicador(String idIndicador) throws HibernateException
+{ 
+    List<Registros> listaRegistros = null;  
+    HibernateException error=null;
+    try 
+    { 
+        iniciaOperacion(); 
+        listaRegistros = sesion.createQuery("from Registros  where idIndicador='"+idIndicador+"'").list();
+    } 
+    
+        catch(HibernateException e){
+                error=e;
+                tx.rollback();
+     }
+   finally { 
+        sesion.close(); 
+    }  
+    if(error!=null)
+        throw error;
+    return listaRegistros; 
+}
+  
+  
   
     public List<Registros> selectAll() throws HibernateException
 { 
