@@ -451,3 +451,109 @@ curl -X POST \
     </temanivel3>" \
 http://localhost:8080/api/temasnivel3
 ```
+
+#		DELETE
+
+####Para todos los delete si se elimino correctamente 
+####retornara un XML JSON como el siguiente y un codigo
+####de estado 200
+
+{"type":"successful","description":"exito en la operacion"}
+```html
+<message>
+  <type>successful</type>
+  <description>exito en la operacion</description>
+</message>
+```
+####En caso de querer eliminar un elemento que no exista
+#### retsornara un XML o JSON como el siguiente 
+####con un codigo de estado 406
+
+{"type":"Warning","description":"No existe el elemeto solicitado con id:{id}"}
+```html
+<message>
+  <type>Warning</type>
+  <description>No existe el elemeto solicitado con id:{id}</description>
+</message>
+```
+####En caso de haber un error con el servidor se retorna 
+####XML o JSON como los siguientes con codigo de estado 500
+
+{"type":"errorServer","description":"could not execute statement"}
+```html
+<message>
+  <type>errorServer</type>
+  <description>could not execute statement</description>
+</message>
+```
+###*****************************************
+###		entidades
+###*****************************************
+
+curl -X DELETE \
+  -H "accept: application/json" \
+  http://localhost:8080/api/entidades/{id}
+
+curl -X DELETE \
+  -H "accept: application/xml" \
+  http://localhost:8080/api/entidades/{id}
+
+###*****************************************
+###		municipios
+###*****************************************
+
+curl -X DELETE \
+  -H "accept: application/json" \
+  http://localhost:8080/api/municipios/{id}
+
+curl -X DELETE \
+  -H "accept: application/xml" \
+  http://localhost:8080/api/municipios/{id}
+
+###*****************************************
+###		indicadores
+###*****************************************
+
+curl -X DELETE \
+  -H "accept: application/json" \
+  http://localhost:8080/api/indicadores/{id}
+
+curl -X DELETE \
+  -H "accept: application/xml" \
+  http://localhost:8080/api/indicadores/{id}
+
+###*****************************************
+###		temas de nivel 1
+###*****************************************
+
+curl -X DELETE \
+  -H "accept: application/json" \
+  http://localhost:8080/api/temasnivel1/{id}
+
+curl -X DELETE \
+  -H "accept: application/xml" \
+  http://localhost:8080/api/temasnivel1/{id}
+
+###*****************************************
+###		temas de nivel 2
+###*****************************************
+
+curl -X DELETE \
+  -H "accept: application/json" \
+  http://localhost:8080/api/temasnivel2/{id}
+
+curl -X DELETE \
+  -H "accept: application/xml" \
+  http://localhost:8080/api/temasnivel2/{id}
+
+###*****************************************
+###		temas de nivel 3
+###*****************************************
+
+curl -X DELETE \
+  -H "accept: application/json" \
+  http://localhost:8080/api/temasnivel3/{id}
+
+curl -X DELETE \
+  -H "accept: application/xml" \
+  http://localhost:8080/api/temasnivel3/{id}
