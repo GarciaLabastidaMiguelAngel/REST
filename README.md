@@ -288,10 +288,6 @@ curl -X GET \
 
 #		  POST
 
-
-###*****************************************
-###		entidades
-###*****************************************
 ####si todos los POST son exitosos regresara algo asi en JSON
 ####o XML con codigo de estado 200
 
@@ -325,6 +321,10 @@ curl -X GET \
   <description> :could not execute statement </description>
 </message>
 ```
+
+###*****************************************
+###		entidades
+###*****************************************
 ```html
 curl -X POST \
 -H "Content-Type: application/json" \
@@ -341,8 +341,12 @@ curl -X POST \
 	<descEntidad>OAXACA</descEntidad>
     </entidad>" \
 http://localhost:8080/api/entidades
+```
 
-
+###*****************************************
+###		municipios
+###*****************************************
+```html
 curl -X POST \
 -H "Content-Type: application/json" \
 -H "accept: application/json" \
@@ -360,6 +364,11 @@ curl -X POST \
     </municipio>" \
 http://localhost:8080/api/municipios
 
+```
+###*****************************************
+###		indicadores
+###*****************************************
+```html
 curl -X POST \
 -H "Content-Type: application/json" \
 -H "accept: application/json" \
@@ -377,7 +386,12 @@ curl -X POST \
 	<nota>alguna descripcion</nota>
     </indicador>" \
 http://localhost:8080/api/indicadores
+```
 
+###*****************************************
+###		temas de nivel 1
+###*****************************************
+```html
 
 curl -X POST \
 -H "Content-Type: application/json" \
@@ -394,8 +408,11 @@ curl -X POST \
 	<descripcion>Sociedad</descripcion>
     </temanivel1>" \
 http://localhost:8080/api/temasnivel1
-
-
+```
+###*****************************************
+###		temas de nivel 2
+###*****************************************
+```html
 curl -X POST \
 -H "Content-Type: application/json" \
 -H "accept: application/json" \
@@ -412,7 +429,11 @@ curl -X POST \
 	<idTemasNivel1>0</idTemasNivel1>
     </temanivel2>" \
 http://localhost:8080/api/temasnivel2
-
+```
+###*****************************************
+###		temas de nivel 3
+###*****************************************
+```html
 curl -X POST \
 -H "Content-Type: application/json" \
 -H "accept: application/json" \
