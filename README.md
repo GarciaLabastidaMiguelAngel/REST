@@ -511,7 +511,7 @@ http://localhost:8080/api/indicadoresmontos
 ###*****************************************
 ###		entidades
 ###*****************************************
-
+```html
 curl -X DELETE \
   -H "accept: application/json" \
   http://localhost:8080/api/entidades/{id}
@@ -519,11 +519,11 @@ curl -X DELETE \
 curl -X DELETE \
   -H "accept: application/xml" \
   http://localhost:8080/api/entidades/{id}
-
+```
 ###*****************************************
 ###		municipios
 ###*****************************************
-
+```html
 curl -X DELETE \
   -H "accept: application/json" \
   http://localhost:8080/api/municipios/{id}
@@ -531,11 +531,11 @@ curl -X DELETE \
 curl -X DELETE \
   -H "accept: application/xml" \
   http://localhost:8080/api/municipios/{id}
-
+```
 ###*****************************************
 ###		indicadores
 ###*****************************************
-
+```html
 curl -X DELETE \
   -H "accept: application/json" \
   http://localhost:8080/api/indicadores/{id}
@@ -543,11 +543,11 @@ curl -X DELETE \
 curl -X DELETE \
   -H "accept: application/xml" \
   http://localhost:8080/api/indicadores/{id}
-
+```
 ###*****************************************
 ###		temas de nivel 1
 ###*****************************************
-
+```html
 curl -X DELETE \
   -H "accept: application/json" \
   http://localhost:8080/api/temasnivel1/{id}
@@ -555,11 +555,11 @@ curl -X DELETE \
 curl -X DELETE \
   -H "accept: application/xml" \
   http://localhost:8080/api/temasnivel1/{id}
-
+```
 ###*****************************************
 ###		temas de nivel 2
 ###*****************************************
-
+```html
 curl -X DELETE \
   -H "accept: application/json" \
   http://localhost:8080/api/temasnivel2/{id}
@@ -567,11 +567,11 @@ curl -X DELETE \
 curl -X DELETE \
   -H "accept: application/xml" \
   http://localhost:8080/api/temasnivel2/{id}
-
+```
 ###*****************************************
 ###		temas de nivel 3
 ###*****************************************
-
+```html
 curl -X DELETE \
   -H "accept: application/json" \
   http://localhost:8080/api/temasnivel3/{id}
@@ -579,3 +579,4 @@ curl -X DELETE \
 curl -X DELETE \
   -H "accept: application/xml" \
   http://localhost:8080/api/temasnivel3/{id}
+```
