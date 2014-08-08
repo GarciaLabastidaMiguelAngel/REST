@@ -97,4 +97,72 @@ private void iniciaOperacion() throws HibernateException
         throw error;
     return listamunicipio; 
 }
+    
+      public int insert(Registros entidad)throws HibernateException
+{ 
+    int id = 0;  
+    HibernateException error=null;
+    try 
+    { 
+        iniciaOperacion(); 
+        id = (int)sesion.save(entidad); 
+        tx.commit(); 
+    }catch(HibernateException he) 
+    { 
+        error=he;
+         tx.rollback();
+    }finally 
+    { 
+        sesion.close(); 
+    }  
+    if(error!=null)
+        throw error;
+    return id; 
+}
+      
+        public Registros selectById(Integer idRegistros) throws HibernateException
+{ 
+    Registros r = null;  
+    HibernateException error=null;
+    try 
+    { 
+        iniciaOperacion(); 
+        r = (Registros) sesion.get(Registros.class, idRegistros); 
+    } 
+    catch(HibernateException e){
+        error=e;
+         tx.rollback();
+    }
+    finally 
+    { 
+        sesion.close(); 
+    }  
+    if(error!=null)
+        throw error;
+    return r; 
+}
+        
+        
+          public void delete(Registros id) throws HibernateException 
+{ 
+    
+    HibernateException error=null;
+    try 
+    { 
+        iniciaOperacion(); 
+        sesion.delete(id); 
+        tx.commit(); 
+    } catch (HibernateException he)
+    {
+        error=he;     
+         tx.rollback();
+    }finally 
+    { 
+        sesion.close(); 
+    } 
+    if(error!=null)
+        throw error;
+}
+
+
 }

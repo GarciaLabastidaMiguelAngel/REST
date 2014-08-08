@@ -451,6 +451,27 @@ curl -X POST \
     </temanivel3>" \
 http://localhost:8080/api/temasnivel3
 ```
+###*****************************************
+###		registros
+###*****************************************
+
+curl -X POST \
+-H "Content-Type: application/json" \
+-H "accept: application/json" \
+-d '{"idIndicador":"1007000019","idMunicipio":0,"anio":"2013","cantidad":"84585402"}' \
+http://localhost:8080/api/indicadoresmontos
+```html
+curl -X POST \
+-H "Content-Type: application/xml" \
+-H "accept: application/xml" \
+-d "<indicadormonto>
+	<idIndicador>1007000019</idIndicador>
+	<idMunicipio>0</idMunicipio>
+	<anio>2014</anio>
+	<cantidad>54585402</cantidad>
+    </indicadormonto>" \
+http://localhost:8080/api/indicadoresmontos
+```
 
 #		DELETE
 

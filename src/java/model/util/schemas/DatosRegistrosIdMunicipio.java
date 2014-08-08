@@ -13,6 +13,21 @@ package model.util.schemas;
  * @author miguel
  */
 public class DatosRegistrosIdMunicipio {
+    private int id;
+
+    public DatosRegistrosIdMunicipio(int id, int anio, int cantidad) {
+        this.id = id;
+        this.anio = anio;
+        this.cantidad = cantidad;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
     private int anio;
     private int cantidad;
 

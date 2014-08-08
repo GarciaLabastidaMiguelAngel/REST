@@ -7,7 +7,9 @@
 package controller;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +22,7 @@ import model.util.schemas.DatosRegistrosIdMunicipio;
 import model.util.schemas.DatosRegistrosMunicipios;
 import org.hibernate.HibernateException;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -74,7 +77,7 @@ public class IndicadoresMontoRestController {
             }
             listaFinal=new ArrayList<>();
             for(Registros r:listaRegistros){
-                listaFinal.add(new DatosRegistrosIdMunicipio(r.getAnio(),r.getCantidad()));
+                listaFinal.add(new DatosRegistrosIdMunicipio(r.getIdRegistros(),r.getAnio(),r.getCantidad()));
             }
                       
         
@@ -128,7 +131,7 @@ public class IndicadoresMontoRestController {
             }
             listaFinal=new ArrayList<>();
             for(Registros r:listaRegistros){
-                listaFinal.add(new DatosRegistrosIdMunicipio(r.getAnio(),r.getCantidad()));
+                listaFinal.add(new DatosRegistrosIdMunicipio(r.getIdRegistros(),r.getAnio(),r.getCantidad()));
             }
                
             response.setStatus(HttpServletResponse.SC_OK);
@@ -182,7 +185,7 @@ public class IndicadoresMontoRestController {
             }
             listaFinal=new ArrayList<>();
             for(Registros r:listaRegistros){
-                listaFinal.add(new DatosRegistrosMunicipios(r.getAnio(),r.getCantidad(),r.getIdMunicipio()));
+                listaFinal.add(new DatosRegistrosMunicipios(r.getIdRegistros(),r.getAnio(),r.getCantidad(),r.getIdMunicipio()));
             }
                       
         
@@ -235,7 +238,7 @@ public class IndicadoresMontoRestController {
             }
             listaFinal=new ArrayList<>();
             for(Registros r:listaRegistros){
-                listaFinal.add(new DatosRegistrosMunicipios(r.getAnio(),r.getCantidad(),r.getIdMunicipio()));
+                listaFinal.add(new DatosRegistrosMunicipios(r.getIdRegistros(),r.getAnio(),r.getCantidad(),r.getIdMunicipio()));
             }
                
             response.setStatus(HttpServletResponse.SC_OK);
@@ -243,9 +246,159 @@ public class IndicadoresMontoRestController {
             return XML.toXML(listaFinal);
             }
             
+//************************POST***************************************************            
+    /**
+     *
+     * @param body
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(method=RequestMethod.POST,
+                    produces="application/json",consumes="application/json")
+            public String setJSON(@RequestBody String body,
+                                     HttpServletRequest request,
+                                     HttpServletResponse response) {
+              Registros m;
+              Gson JSON=new Gson();
+              try{
+                m=JSON.fromJson(body, Registros.class);
+              }
+              catch(JsonSyntaxException ex){
+                  response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                   Error er=new Error();
+                    er.setTypeAndDescription("JSONSyntax",ex.getMessage().split("java.io.EOFException:")[1]);
+                    JSON=new Gson();
+                     return JSON.toJson(er);
+              }
+              if(m.getCantidad()==null){
+                  response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                  Error er=new Error();
+                    er.setTypeAndDescription("JSONSyntax","Los parametros no son los correctos verificar");
+                    JSON=new Gson();
+                     return JSON.toJson(er);
+              }
+              
+              if(m.getAnio()==null){
+                  response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                  Error er=new Error();
+                    er.setTypeAndDescription("JSONSyntax","Los parametros no son los correctos verificar");
+                    JSON=new Gson();
+                     return JSON.toJson(er);
+              }
+              
+              if(m.getIdIndicador()==null){
+                  response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                  Error er=new Error();
+                    er.setTypeAndDescription("JSONSyntax","Los parametros no son los correctos verificar");
+                    JSON=new Gson();
+                     return JSON.toJson(er);
+              }
+              
+              if(m.getIdMunicipio()==null){
+                  response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                  Error er=new Error();
+                    er.setTypeAndDescription("JSONSyntax","Los parametros no son los correctos verificar");
+                    JSON=new Gson();
+                     return JSON.toJson(er);
+              }
+              try {
+                RegistrosDAO tabla=new RegistrosDAO();
+                m.setIdhash(m.hashCode());
+                tabla.insert(m);
+            } catch (HibernateException ex) {
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    Error er=new Error();
+                    er.setTypeAndDescription("errorServerError",ex.getMessage());
+                    JSON=new Gson();
+                    return JSON.toJson(er);
+            }
+             response.setStatus(HttpServletResponse.SC_OK);
+              Error er=new Error();
+                    er.setTypeAndDescription("successful","exito en la operacion");
+                    JSON=new Gson();
+              return JSON.toJson(er);
             
+        }         
             
-          
+    /**
+     *
+     * @param body
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(method=RequestMethod.POST,
+                    produces="application/xml",consumes="application/xml")
+            public String setXML(@RequestBody String body,
+                                     HttpServletRequest request,
+                                     HttpServletResponse response) {
+              Registros m;
+              XStream XML;
+              XML = new XStream(new DomDriver());
+              try{
+                 XML.setClassLoader(Registros.class.getClassLoader());
+                 XML.alias("indicadormonto",Registros.class);
+                m=(Registros)XML.fromXML(body);
+              }
+              catch(Exception ex){
+                  response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                   Error er=new Error();
+                    er.setTypeAndDescription("XMLSyntax",ex.getMessage());
+                    XML.alias("message", Error.class);
+                    return XML.toXML(er);
+              }
+                if(m.getCantidad()==null){
+                  response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                  Error er=new Error();
+                    er.setTypeAndDescription("JSONSyntax","Los parametros no son los correctos verificar");
+                    XML.alias("message", Error.class);
+                    return XML.toXML(er);
+              }
+              
+              if(m.getAnio()==null){
+                  response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                  Error er=new Error();
+                    er.setTypeAndDescription("JSONSyntax","Los parametros no son los correctos verificar");
+                   XML.alias("message", Error.class);
+                    return XML.toXML(er);
+              }
+              
+              if(m.getIdIndicador()==null){
+                  response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                  Error er=new Error();
+                    er.setTypeAndDescription("JSONSyntax","Los parametros no son los correctos verificar");
+                    XML.alias("message", Error.class);
+                    return XML.toXML(er);
+              }
+              
+              if(m.getIdMunicipio()==null){
+                  response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                  Error er=new Error();
+                    er.setTypeAndDescription("JSONSyntax","Los parametros no son los correctos verificar");
+                    XML.alias("message", Error.class);
+                    return XML.toXML(er);
+              }
+              try {
+                RegistrosDAO tabla=new RegistrosDAO();
+                m.setIdhash(m.hashCode());
+                tabla.insert(m);
+            } catch (HibernateException ex) {
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    Error er=new Error();
+                    er.setTypeAndDescription("errorServerError",ex.getMessage());
+                    XML.alias("message", Error.class);
+                    return XML.toXML(er);
+            }
+             response.setStatus(HttpServletResponse.SC_OK);
+              Error er=new Error();
+                    er.setTypeAndDescription("successful","exito en la operacion");
+                   XML.alias("message", Error.class);
+                    return XML.toXML(er);
+            
+        } 
+                     
+    
    
 }
             

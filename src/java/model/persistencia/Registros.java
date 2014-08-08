@@ -109,6 +109,7 @@ public class Registros implements Serializable {
         int has = 0;
         has += (anio != null ? anio.hashCode() : 0);
         has += (idIndicador != null ? idIndicador.hashCode() : 0);
+        has += (idMunicipio != null ? idMunicipio.hashCode() : 0);
         return has;
     }
 

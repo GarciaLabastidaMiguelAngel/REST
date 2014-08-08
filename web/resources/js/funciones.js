@@ -571,7 +571,7 @@ function asignarEventos(){
                                   for(var llave in json.data){
                                         t=json.data[llave];
                                         option=document.createElement("option");
-                                        option.value=t.idTemaNivel3;
+                                        option.value=t.idTemasNivel3;
                                         text=document.createTextNode(t.descripcion);
                                         option.appendChild(text);
                                         temas.appendChild(option);
