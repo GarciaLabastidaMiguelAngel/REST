@@ -454,12 +454,13 @@ http://localhost:8080/api/temasnivel3
 ###*****************************************
 ###		registros
 ###*****************************************
-
+```html
 curl -X POST \
 -H "Content-Type: application/json" \
 -H "accept: application/json" \
 -d '{"idIndicador":"1007000019","idMunicipio":0,"anio":"2013","cantidad":"84585402"}' \
 http://localhost:8080/api/indicadoresmontos
+```
 ```html
 curl -X POST \
 -H "Content-Type: application/xml" \
