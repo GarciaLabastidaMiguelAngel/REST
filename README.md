@@ -301,7 +301,7 @@ curl -X GET \
   <type>successful</type>
   <description>exito en la operacion</description>
 </message>
-```html
+```
 ####y si hubiera algun error de sintaxis regresara los
 ####los sigueintes mensajes en XML o JSON con codigo de estado
 ####400
