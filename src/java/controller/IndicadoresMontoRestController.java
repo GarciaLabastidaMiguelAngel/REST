@@ -68,7 +68,7 @@ public class IndicadoresMontoRestController {
             } catch (HibernateException ex) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     Error e=new Error();
-                    e.setTypeAndDescription("DataBase",ex.getMessage());
+                    e.setTypeAndDescription("errorServer",ex.getMessage());
                     JSON=new Gson();
                      return JSON.toJson(e);
             }
@@ -122,7 +122,7 @@ public class IndicadoresMontoRestController {
             } catch (HibernateException ex) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     Error e=new Error();
-                    e.setTypeAndDescription("DataBase",ex.getMessage());
+                    e.setTypeAndDescription("errorServer",ex.getMessage());
                      XML.alias("message",Error.class);
                     return XML.toXML(e);
             }
@@ -176,7 +176,7 @@ public class IndicadoresMontoRestController {
             } catch (HibernateException ex) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     Error e=new Error();
-                    e.setTypeAndDescription("DataBase",ex.getMessage());
+                    e.setTypeAndDescription("errorServer",ex.getMessage());
                     JSON=new Gson();
                      return JSON.toJson(e);
             }
@@ -229,7 +229,7 @@ public class IndicadoresMontoRestController {
             } catch (HibernateException ex) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     Error e=new Error();
-                    e.setTypeAndDescription("DataBase",ex.getMessage());
+                    e.setTypeAndDescription("errorServer",ex.getMessage());
                      XML.alias("message",Error.class);
                     return XML.toXML(e);
             }

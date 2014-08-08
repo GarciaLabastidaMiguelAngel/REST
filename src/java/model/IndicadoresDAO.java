@@ -34,14 +34,14 @@ private void iniciaOperacion() throws HibernateException
      * @param indicador
      * @return
      */
-    public int insert(Indicadores indicador)throws HibernateException
+    public String insert(Indicadores indicador)throws HibernateException
 { 
-    int id = 0;  
+   String id=null;  
     HibernateException error=null;
     try 
     { 
         iniciaOperacion(); 
-        id = (int)sesion.save(indicador); 
+        id = (String)sesion.save(indicador); 
         tx.commit(); 
     }catch(HibernateException he) 
     { 

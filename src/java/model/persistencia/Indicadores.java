@@ -27,7 +27,15 @@ import javax.persistence.Id;
     @Column(name = "nota")
     private String nota;
     @Column(name = "id_temas_nivel_3")
-    private int id_temas_nivel_3;
+    private int idTemaNivel3;
+
+    public int getIdTemaNivel3() {
+        return idTemaNivel3;
+    }
+
+    public void setIdTemaNivel3(int idTemaNivel3) {
+        this.idTemaNivel3 = idTemaNivel3;
+    }
    
 
     public Indicadores() {

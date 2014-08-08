@@ -285,3 +285,148 @@ curl -X GET \
 
 {"data":[{"anio":2010,"cantidad":485417},{"anio":2011,"cantidad":501089}]}
 ```
+
+##		  POST
+
+
+###*****************************************
+###		entidades
+###*****************************************
+####si todos los POST son exitosos regresara algo asi en JSON
+####o XML con codigo de estado 200
+
+####{"type":"successful","description":"exito en la operacion"}
+```html
+####<message>
+####  <type>successful</type>
+####  <description>exito en la operacion</description>
+####</message>
+
+####y si hubiera algun error de sintaxis regresara los
+####los sigueintes mensajes en XML o JSON con codigo de estado
+####400
+
+####{"type":"JSONSyntax","description":"Los parametros no son los correctos verificar"}
+
+####<message>
+####  <type>XMLSyntax</type>
+####  <description> :Los parametros no son los correctos verificar </description>
+####</message>
+
+####en caso de que el servidor sufra algun tipo de problema en la 
+####insercion de los datos retornara los sigueintes XML o JSON con 
+#### codigo de error 500 como por ejemplo registrar un nuevo 
+####municipio a una entidad que aun no esta registrada
+
+####{"type":"errorServer","description":"could not execute statement"}
+
+####<message>
+####  <type>errorServer</type>
+####  <description> :could not execute statement </description>
+####</message>
+
+
+curl -X POST \
+-H "Content-Type: application/json" \
+-H "accept: application/json" \
+-d '{"descEntidad":"OAXACA"}' \
+http://localhost:8080/api/entidades
+
+
+
+curl -X POST \
+-H "Content-Type: application/xml" \
+-H "accept: application/xml" \
+-d "<entidad>
+	<descEntidad>OAXACA</descEntidad>
+    </entidad>" \
+http://localhost:8080/api/entidades
+
+
+curl -X POST \
+-H "Content-Type: application/json" \
+-H "accept: application/json" \
+-d '{"descMunicipio":"OAXACA","idEntidad":0}' \
+http://localhost:8080/api/municipios
+
+
+
+curl -X POST \
+-H "Content-Type: application/xml" \
+-H "accept: application/xml" \
+-d "<municipio>
+	<descMunicipio>OAXACA</descMunicipio>
+	<idEntidad>0</idEntidad>
+    </municipio>" \
+http://localhost:8080/api/municipios
+
+curl -X POST \
+-H "Content-Type: application/json" \
+-H "accept: application/json" \
+-d '{"idIndicador":"7009222212","descripcion":"poblacion menor de 14 anios","nota":"nota sobre el nuevo indicador",idTemaNivel3:0}' \
+http://localhost:8080/api/indicadores
+
+
+
+curl -X POST \
+-H "Content-Type: application/xml" \
+-H "accept: application/xml" \
+-d "<indicador>
+	<idIndicador>9988232</idIndicador>
+	<descripcion>mayores de edad</descripcion>
+	<nota>alguna descripcion</nota>
+    </indicador>" \
+http://localhost:8080/api/indicadores
+
+
+curl -X POST \
+-H "Content-Type: application/json" \
+-H "accept: application/json" \
+-d '{"descripcion":"Sociedad"}' \
+http://localhost:8080/api/temasnivel1
+
+
+
+curl -X POST \
+-H "Content-Type: application/xml" \
+-H "accept: application/xml" \
+-d "<temanivel1>
+	<descripcion>Sociedad</descripcion>
+    </temanivel1>" \
+http://localhost:8080/api/temasnivel1
+
+
+curl -X POST \
+-H "Content-Type: application/json" \
+-H "accept: application/json" \
+-d '{"descripcion":"Sociedad","idTemasNivel1":0}' \
+http://localhost:8080/api/temasnivel2
+
+
+
+curl -X POST \
+-H "Content-Type: application/xml" \
+-H "accept: application/xml" \
+-d "<temanivel2>
+	<descripcion>Sociedad</descripcion>
+	<idTemasNivel1>0</idTemasNivel1>
+    </temanivel2>" \
+http://localhost:8080/api/temasnivel2
+
+curl -X POST \
+-H "Content-Type: application/json" \
+-H "accept: application/json" \
+-d '{"descripcion":"Sociedad","idTemasNivel2":0}' \
+http://localhost:8080/api/temasnivel3
+
+
+
+curl -X POST \
+-H "Content-Type: application/xml" \
+-H "accept: application/xml" \
+-d "<temanivel3>
+	<descripcion>Sociedad</descripcion>
+	<idTemasNivel2>0</idTemasNivel2>
+    </temanivel3>" \
+http://localhost:8080/api/temasnivel3
+```

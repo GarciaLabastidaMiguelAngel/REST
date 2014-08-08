@@ -55,7 +55,7 @@ public class TemasNivel3RestController {
             } catch (HibernateException ex) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     Error e=new Error();
-                    e.setTypeAndDescription("DataBase",ex.getMessage());
+                    e.setTypeAndDescription("errorServer",ex.getMessage());
                     JSON=new Gson();
                      return JSON.toJson(e);
             }
@@ -97,7 +97,7 @@ public class TemasNivel3RestController {
             } catch (HibernateException ex) {
                     response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     Error e=new Error();
-                    e.setTypeAndDescription("dataBaseError",ex.getMessage());
+                    e.setTypeAndDescription("errorServerError",ex.getMessage());
                     XML= new XStream();
                     XML.alias("message",Error.class);
                     return XML.toXML(e);
@@ -142,7 +142,7 @@ public class TemasNivel3RestController {
             } catch (HibernateException ex) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     Error e=new Error();
-                    e.setTypeAndDescription("DataBaseError",ex.getMessage());
+                    e.setTypeAndDescription("errorServerError",ex.getMessage());
                     JSON=new Gson();
                      return JSON.toJson(e);
             }
@@ -184,7 +184,7 @@ public class TemasNivel3RestController {
             } catch (HibernateException ex) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     Error e=new Error();
-                    e.setTypeAndDescription("DataBaseError",ex.getMessage());
+                    e.setTypeAndDescription("errorServerError",ex.getMessage());
                     XML= new XStream();
                     XML.alias("message",Error.class);
                     return XML.toXML(e);
@@ -229,7 +229,7 @@ public class TemasNivel3RestController {
             } catch (HibernateException ex) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     Error e=new Error();
-                    e.setTypeAndDescription("DataBase",ex.getMessage());
+                    e.setTypeAndDescription("errorServer",ex.getMessage());
                     JSON=new Gson();
                      return JSON.toJson(e);
             }
@@ -276,7 +276,7 @@ public class TemasNivel3RestController {
             } catch (HibernateException ex) {
                     response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     Error e=new Error();
-                    e.setTypeAndDescription("dataBaseError",ex.getMessage());
+                    e.setTypeAndDescription("errorServerError",ex.getMessage());
                     XML= new XStream();
                     XML.alias("message", Error.class);
                     return XML.toXML(e);
@@ -310,14 +310,14 @@ public class TemasNivel3RestController {
               catch(JsonSyntaxException ex){
                   response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                    Error er=new Error();
-                    er.setTypeAndDescription("JsonSyntax",ex.getMessage().split("java.io.EOFException:")[1]);
+                    er.setTypeAndDescription("JSONSyntax",ex.getMessage().split("java.io.EOFException:")[1]);
                     JSON=new Gson();
                      return JSON.toJson(er);
               }
               if(m.getDescripcion()==null || m.getIdTemasNivel2()==null){
                   response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                   Error er=new Error();
-                    er.setTypeAndDescription("inconsistency","Los parametros no son los correctos verificar");
+                    er.setTypeAndDescription("JSONSyntax","Los parametros no son los correctos verificar");
                     JSON=new Gson();
                      return JSON.toJson(er);
               }
@@ -327,7 +327,7 @@ public class TemasNivel3RestController {
             } catch (HibernateException ex) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     Error er=new Error();
-                    er.setTypeAndDescription("DataBaseError",ex.getMessage());
+                    er.setTypeAndDescription("errorServerError",ex.getMessage());
                     JSON=new Gson();
                     return JSON.toJson(er);
             }
@@ -356,7 +356,7 @@ public class TemasNivel3RestController {
               XML = new XStream(new DomDriver());
               try{
                  XML.setClassLoader(TemasNivel3.class.getClassLoader());
-                 XML.alias("temaNivel3",TemasNivel3.class);
+                 XML.alias("temanivel3",TemasNivel3.class);
                 m=(TemasNivel3)XML.fromXML(body);
               }
               catch(Exception ex){
@@ -369,7 +369,7 @@ public class TemasNivel3RestController {
               if(m.getDescripcion()==null || m.getIdTemasNivel2()==null){
                   response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                   Error er=new Error();
-                    er.setTypeAndDescription("inconsistency","Los parametros no son los correctos verificar");
+                    er.setTypeAndDescription("XMLSyntax","Los parametros no son los correctos verificar");
                    XML.alias("message", Error.class);
                     return XML.toXML(er);
               }
@@ -379,7 +379,7 @@ public class TemasNivel3RestController {
             } catch (HibernateException ex) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     Error er=new Error();
-                    er.setTypeAndDescription("DataBaseError",ex.getMessage());
+                    er.setTypeAndDescription("errorServerError",ex.getMessage());
                     XML.alias("message", Error.class);
                     return XML.toXML(er);
             }
@@ -424,7 +424,7 @@ public class TemasNivel3RestController {
             } catch (HibernateException ex) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     Error er=new Error();
-                    er.setTypeAndDescription("DataBaseError",ex.getMessage());
+                    er.setTypeAndDescription("errorServerError",ex.getMessage());
                    return JSON.toJson(er);
             }            
              response.setStatus(HttpServletResponse.SC_OK);
@@ -466,7 +466,7 @@ public class TemasNivel3RestController {
             } catch (HibernateException ex) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     Error er=new Error();
-                    er.setTypeAndDescription("DataBaseError",ex.getMessage());
+                    er.setTypeAndDescription("errorServerError",ex.getMessage());
                     XML.alias("message", Error.class);
                     return XML.toXML(er);
             }            
