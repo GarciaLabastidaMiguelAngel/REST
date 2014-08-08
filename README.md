@@ -1,5 +1,5 @@
 
-##		   GET
+#		   GET
 
 
 ###*****************************************
@@ -286,7 +286,7 @@ curl -X GET \
 {"data":[{"anio":2010,"cantidad":485417},{"anio":2011,"cantidad":501089}]}
 ```
 
-##		  POST
+#		  POST
 
 
 ###*****************************************
@@ -295,37 +295,37 @@ curl -X GET \
 ####si todos los POST son exitosos regresara algo asi en JSON
 ####o XML con codigo de estado 200
 
-####{"type":"successful","description":"exito en la operacion"}
+{"type":"successful","description":"exito en la operacion"}
 ```html
-####<message>
-####  <type>successful</type>
-####  <description>exito en la operacion</description>
-####</message>
-
+<message>
+  <type>successful</type>
+  <description>exito en la operacion</description>
+</message>
+```html
 ####y si hubiera algun error de sintaxis regresara los
 ####los sigueintes mensajes en XML o JSON con codigo de estado
 ####400
 
-####{"type":"JSONSyntax","description":"Los parametros no son los correctos verificar"}
-
-####<message>
-####  <type>XMLSyntax</type>
-####  <description> :Los parametros no son los correctos verificar </description>
-####</message>
-
+{"type":"JSONSyntax","description":"Los parametros no son los correctos verificar"}
+```html
+<message>
+  <type>XMLSyntax</type>
+  <description> :Los parametros no son los correctos verificar </description>
+</message>
+```
 ####en caso de que el servidor sufra algun tipo de problema en la 
 ####insercion de los datos retornara los sigueintes XML o JSON con 
 #### codigo de error 500 como por ejemplo registrar un nuevo 
 ####municipio a una entidad que aun no esta registrada
 
-####{"type":"errorServer","description":"could not execute statement"}
-
-####<message>
-####  <type>errorServer</type>
-####  <description> :could not execute statement </description>
-####</message>
-
-
+{"type":"errorServer","description":"could not execute statement"}
+```html
+<message>
+  <type>errorServer</type>
+  <description> :could not execute statement </description>
+</message>
+```
+```html
 curl -X POST \
 -H "Content-Type: application/json" \
 -H "accept: application/json" \
